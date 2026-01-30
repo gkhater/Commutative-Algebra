@@ -1,0 +1,965 @@
+\documentclass[11pt,a4paper]{article}
+
+%----- ENHANCED TYPOGRAPHY -----
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}        % clean vector font
+\usepackage{microtype}      % better justification & kerning
+\usepackage{palatino} 
+\usepackage{braket}    % for text & math
+\usepackage{mathtools}  % in the preamble
+
+%----- PAGE LAYOUT -----
+\usepackage{geometry}
+\geometry{top=1in, bottom=1in, left=1in, right=1in}
+\usepackage{setspace}
+\onehalfspacing  % 1.5 line spacing
+
+%----- FANCY HEADERS & FOOTERS -----
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+% page number outside, header text inside
+
+\fancyhead[LO]{\small \rightmark}
+\fancyhead[RO]{\small \leftmark}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\usepackage{bookmark}
+
+% make sections feed into \leftmark/\rightmark
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+\renewcommand{\subsectionmark}[1]{\markright{#1}}
+
+%----- SECTION NUMBERING & TOC DEPTH -----
+\setcounter{secnumdepth}{3}  % number down to \subsubsection
+\setcounter{tocdepth}{2}     % show ToC down to \subsection
+
+%----- AMS MATH & THEOREM STYLES -----
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{amsthm}
+
+% definitions, examples, remarks upright
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}[definition]{Example}
+\newtheorem{remark}[definition]{Remark}
+
+% theorems, lemmas, corollaries italic
+\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{corollary}[definition]{Corollary}
+
+% unnumbered proof environment
+\theoremstyle{remark}
+
+%----- OTHER PACKAGES -----
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{calc, matrix, decorations.pathreplacing, positioning}
+\usepackage{tikz-cd}
+\usepackage{hyperref}
+\hypersetup{colorlinks,
+linkcolor=blue, citecolor=purple, urlcolor=teal}
+\usepackage{enumitem}
+\setlist[itemize]{nosep, left=1.5em}
+\usepackage{booktabs}
+\usepackage{listings}
+\lstset{
+basicstyle=\ttfamily\small,
+numbers=left,
+numbersep=5pt,
+frame=single,
+breaklines=true
+}
+\usepackage{xcolor}
+\definecolor{shade}{HTML}{F5F5F5}
+\usepackage{float}
+%----- CUSTOM MACROS -----
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\dist}[2]{d\bigl(#1,#2\bigr)}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}} 
+\newcommand{\Q}{\mathbb{Q}} 
+\newcommand{\C}{\mathbb{C}}
+\renewcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\angles}[1]{\langle #1 \rangle}
+\newcommand{\abs}[1]{\lvert #1 \rvert} 
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+\newcommand{\Bil}{\operatorname{Bil}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\im}{\operatorname{Im}}
+\newcommand{\coker}{\operatorname{coker}}
+
+% \usepackage{mathtools} 
+% \DeclarePairedDelimiter{\angles}{\langle}{\rangle} 
+% \DeclarePairedDelimiter{\braces}{\left\{}{\right\}} 
+% \DeclarePairedDelimiter{\abs}{\lvert}{\rvert} 
+% \DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+%----- TITLE METADATA -----
+\title{\LARGE\bfseries Commutative Algebra}
+\author{Georges Khater \\ \small American University of Beirut, Math 344}
+\date{\today}
+
+%===============================================
+\begin{document}
+\maketitle
+\tableofcontents
+\bigskip
+
+
+\section{Introduction.}
+\subsection{Multiplicative sets and Prime ideals}
+\begin{definition}
+    A subset $S \subset A$ is a called multiplicatively closed iff 
+    \begin{enumerate}
+        \item $1 \in S$ 
+        \item if $s,t \in S$, then $st \in S$. 
+    \end{enumerate}
+\end{definition}
+
+\begin{proposition}
+    Let $S$ be multiplicatively closed, and let $a$ be an ideal with $a \cap S = \varnothing$. Consider all ideals $b$ s.t 
+    $$\begin{cases}
+        a \subseteq b \\ 
+        b \cap S = \varnothing
+    \end{cases}$$
+    Equivalently $a \subset b \subset A - S$. Then the poset of such ideals satisfies the conditions of Zorn's lemma, and any maximal such element is a prime ideal of $A$.  
+\end{proposition}
+
+
+\begin{proof}
+    The poset is nonempty because it contains $a$, every totally ordered subset $\set{b_i \colon i \in I}$, has an upper bound 
+    $\bigcup_{i \in I} b_i$. Therefore by Zorn's lemma there exists some maximal element $p$ of this set. 
+
+    Suppose that $x, y \in A$ with $xy \in p$ but $x, y \not\in p$: Since $x,y \not\in b$ then the ideal sums 
+    $$p + \angles{x}, \ p + \angles{y}$$
+    Strictly contain $p$, so they must contain each an element of $S$, therefore $\exists s \in S$ of the form 
+    $$s = p_1 + xa_1 \quad p_1 \in p, \ a_1 \in R$$
+    and similarly $\exists t \in s$ with 
+    $$t = p_2 + y a_2$$
+    but then $st \in S$, therefore 
+    $$p_1 p_2 + p_1 y a_2 + p_2 x a_1 + xy a_1 a_2 \in P \implies st \in p$$ 
+    contradicting that $p \cap S = \varnothing$. \\
+    Therefore $p$ is prime.
+\end{proof}
+
+\begin{example}
+    \begin{itemize}
+        \item $A$ a domain and $S = A - \set{0}$. 
+        \item In $\Z$: $S = \set{1, 6, 6^2, \cdots}$, or more generally in any $A$ if 
+        $x \in A$ is not nilpotent, then 
+        $$S = \set{1, x, x^2, \cdots}, \quad S \cap \set{0} = \varnothing$$
+        There exists a prime ideal with $p \cap S = \varnothing \implies x \not\in p$ (obviously $0 \in p$). \\
+        Therefore 
+        $$\set{\text{all nilpotent } x} = \operatorname{nilrad} (0) = \bigcap_{p \text{ prime ideal}} p$$
+        \item $p \subset A$ prime then $A - p$ is multiplicatively closed. 
+    \end{itemize}
+\end{example}
+
+\begin{theorem}
+    If $a \subset A$ is an ideal, then 
+    $$\operatorname{rad} a := \set{x \in A \mid \ \exists N \geq 1 \text{ with } x^N \in a}$$
+    satisfies 
+    $$\operatorname{rad} a = \bigcap_{\text{all } p, \ p \supseteq a} p$$ 
+\end{theorem}
+
+\begin{proof}
+    \begin{itemize}
+        \item Slick proof: apply the conclusion above to the quotient ring $A / a$. 
+        \item Pedestrian proof: Show both inclusions directly :
+        If $x^N \in a$ and $a \subset p$, then $x \in p$ (for all primes $p \supseteq a$), so $x \in \bigcap_{p \supseteq a} p$. \\
+        If $\forall N$, $x^N \not\in a$ then take $S = \set{1, x, x^2, \cdots}$ we have $a \cap S = \varnothing$; so $\exists p$ ($p \supseteq a$ and $p \cap S$)
+        which is prime with $p \supseteq a$ and $p \cap S = \varnothing$ so $\exists p \supseteq a$ with $x \not\in p$ so 
+        $$x \not\in \bigcap_{p \supseteq a} p$$ 
+    \end{itemize}
+\end{proof}
+
+\subsection{The Jacobson radical of a commutative ring}
+\begin{definition}
+    $$\operatorname{Jrad} a = \bigcap_{\text{all maximal ideals } m \subsetneq A} \supseteq \operatorname{nilrad} A$$
+\end{definition}
+
+\begin{proposition}
+    $x \in \operatorname{Jrad} A \iff \forall y \in A, \ 1 - xy \text{ is a unit in } A$. 
+\end{proposition}
+
+\begin{proof}
+    \begin{itemize}
+        \item[$\implies$] Let $x \in \operatorname{Jrad} A$, then $\forall m$ maximal ideal, $x \in m$. If $y \in A$ satisfies $1 - xy$ not a unit, then 
+        $$\angles{1 - xy} \subsetneq A$$
+        so $\exists m$ maximal with $1 - xy \in m$ but $x \in m$. This would force $1 \in m$ since 
+        $$1 - xy + xy$$
+        \item[$\impliedby$] Suppose that $\forall y \in A$, $1 - xy$ is a unit in $A$. We want to show that if $M$ is maximal, is $x \in m$? 
+        Work in $A / m$, field: $\overline{x}$ satisfies that $\forall \overline{y} \in A / m$, 
+        $$\overline{1} - \overline{xy} \text{ is a unit in } A / m$$
+        but in a field, this can only happen if $\overline{x} = \overline{0}$. Therefore $x \in m$, for all $m$. 
+    \end{itemize}
+\end{proof}
+
+\subsection{Extension and contraction of ideals} 
+\textbf{Setup.} $A \xrightarrow{f} B$ a homomorphism of rings (so $B$ is an $A$-algebra) and 
+$$\mathfrak{a} \subseteq A \text{ ideal} \to \mathfrak{a}^e = \mathfrak{a} B = \angles{f(a) \colon a \in A}$$
+$$\mathfrak{b} \subseteq B \to \mathfrak{b}^c = f^{-1} (\mathfrak{b}) = \ker \left(A \xrightarrow{f} B \xrightarrow{\nu} B / \mathfrak{b}\right)$$
+Basic observations 
+$$\mathfrak{a}^{ec} \supseteq \mathfrak{a}, \quad \mathfrak{b}^{ce} \subseteq \mathfrak{b}$$
+but notice that 
+$$\mathfrak{a} = \mathfrak{a}^e, \quad \mathfrak{b}^{cec} = \mathfrak{b}^c$$
+\textbf{Important fact.} if $q \subseteq B$ is prime then so is $q^c$ therefore 
+$$A / q^c \xrightarrow{\text{subdomain}} B / q$$
+\begin{example}
+    $\Z \to \Q$, $(6 \Z)^e = \Q$, 
+    $(6 \Z)^{ec} = \Z$. 
+\end{example}
+
+\begin{example}
+    $\Z \to \Z / 10 \Z$
+    $(4\Z)^e = \frac{4 \Z + 10 \Z}{10 \Z} = 2\Z / 10 \Z$ 
+    so 
+    $$(4 \Z)^{ec} = 2 \Z$$
+\end{example}
+
+\begin{example}
+    $A \to A[x]$ take $\mathfrak{a} \subseteq A$ then 
+    $\mathfrak{a}^e = \mathfrak{a}[x]$ which is the set of all polynomials with coefficients in $\mathfrak{a}$. And 
+    $\set{0_A} = \angles{x + 1}^c$; $\angles{x+1}^{ce} = \set{0_{A[x]}}$. 
+\end{example}
+
+\subsection{Modules.}
+View Math 341 Notes, I won't be taking notes here. 
+
+Let $A$ be given and $a_1, \cdots, a_r$ ideals in $A$, we say that these ideals are relatively prime iff 
+$\forall i, j$ with $i \neq j$, 
+$$a_i + a_j = A \iff \exists x \in a_i, \ y \in a_j \text{ s.t } x + y = 1$$ 
+
+\begin{proposition}
+    In the above situation we have that 
+    $$a_1 \cdots a_r = a_1 \cap a_2 \cap \cdots \cap a_r$$
+\end{proposition}
+
+\begin{proof}
+    Induction on $r$:
+    $$a_1 a_2 \subseteq a_1 \cap a_2 \quad \text{easy}$$
+    Conversely if $z \in a_1 \cap a_2$ we have that $x \in a_1, \ y \in a_2$ s.t $x + y = 1$ then 
+    $$z = z \cdot 1 = zx + zy \in a_1 a_2$$
+    for the inductive step, we have already $b = a_1 \cap \cdots \cap a_{r-1} = a_1 \cdots a_{r-1}$ need to observe that $a_r$ is still 
+    relatively prime to $b$. 
+
+    Indeed, we know that 
+    $$a_1 + a_r = A, \ \cdots, a_{r-1} + a_r = A$$
+    therefore we chose elements in $x_1 \in a_1, \cdots, x_{r-1} \in a_{r-1}$ and 
+    $y_1, \cdots y_{r-1}\in a_r$ with $x_i + y_i = 1$. We can take 
+    \begin{align*}
+        1 &= 1^{r-1}\\ 
+        &= (x_1 + y_1) (x_2 + y_2) \cdots (x_{r-1} + y_{r-1})\\
+        &= x_1 \cdots x_{r-1} + (\text{terms involving some $y_i$}) \\
+        &= \in a_{1} \cdots a_{r-1} + \in a_r 
+    \end{align*}
+\end{proof}
+
+\begin{theorem}[Chinese Remainder Theorem]
+    Let $a_1 \cdots a_r$ be pairwise relatively prime, consider the homomorphism of $A$ modules 
+    $$A \xrightarrow{f} A / a_1 \oplus \cdots \oplus A / a_r$$
+    Hence 
+    $$A / a_1 \oplus \cdots \oplus A / a_r \cong A / \ker = A / a_1 \cdots a_r$$
+\end{theorem}
+
+\subsection{Local Rings}
+\begin{definition}
+    A ring $A$ is said to be \emph{local} iff it has exactly one maximal ideal (called $m$).
+\end{definition} 
+
+\begin{example}
+    \begin{itemize}
+        \item $A = K$ a field, then $m = 0$ 
+        \item Fix $p$ prime $A \set{a/b \in \Q \mid a, b \in \Z, \ b \not\in p \Z} \supset m = \set{pc / b \mid c,b \in \Z, \ p \not\mid b} = p A$. 
+        Check that the only ideals are 
+        $$A \supsetneq pA \supsetneq p^2 A \supsetneq \cdots$$
+        \item \begin{align*}
+            A &= k [[x_1,x_2]] \\
+            &= \set{\text{formal power series}} \\
+            &= \set{a_0 + b_1 x_1 + b_2 x_2 + c_{11} x_1 + \cdots} 
+        \end{align*}
+        Where $a_i, b_j, c_{k.l}, \cdots \in K$ with 
+        $$m = \angles{x_1, x_2} = \set{\text{formal power series with } a_0 = 0}$$
+        This is the only maximal ideal because $m$ is the set of non-units, think about it. 
+        Same for the example above.
+    \end{itemize}
+\end{example}
+
+\begin{proposition}
+    $A$ is local $\iff$ the set of non-units of $A$ is an ideal (which turns out to be the unique maximal ideal).
+\end{proposition}
+
+\begin{proof}
+    We denote by $V$ the set of non-units of $A$
+    \begin{itemize}
+        \item[$\implies$] Let $A$ be local, let $m$ be its unique maximal ideal we clearly have that $m \subseteq V$
+        Now take any $v \in V$, then by Zorn's lemma we can find some maximal ideal $I \ni a$. But since $m$ is the unique maximal ideal then we have 
+        that $m \ni a$. 
+
+        \item[$\impliedby$] Trivial.
+    \end{itemize}
+\end{proof}
+
+\subsection{Algebras} 
+\begin{definition}
+    An \emph{$A$-algebra} is a ring $R$ (not necc. commutative) with a ring homomorphism $f \colon A \to R$ s.t 
+    $$\operatorname{Im} f \subseteq \text{ center of } R$$
+    We will generally stick to the case where $R$ is commutative. 
+\end{definition}
+
+\begin{example}
+    All rings are $\Z$-algebras, $M_n(A)$, $A[x_1, \cdots, x_r]$. Moreover $\C$, $\mathbb{H}$ and matrices in $\C$ are all $\R$ algebras
+\end{example}
+
+\begin{definition}
+    A \emph{finitely generated $A$-algebra} means that $\exists a \subseteq A$ an ideal s.t 
+    $$R \cong A[x_1, \cdots,x_n] / a$$
+\end{definition}
+
+\begin{example}
+    A $\Z$-algebra $\Z / 10 \Z [y_1, y_2]$ where $y_1^2 - 1 = 0$ and $y_2^3 - 2 y_1 y_2 - 3$ 
+    which is isomorphic to 
+    $$\Z [x_1, x_2] / \angles{10, x_1^2 - 1, x_2^3 - 2x, x_2 - 3}$$
+\end{example}
+
+\begin{definition}
+    $a, b$ ideals of $A$ then the \emph{colon ideal} $(a \colon b)$ is defined to be 
+    $$(a \colon b) = \set{x \in A \colon x b \subseteq a} = \bigcap_{y \in b} \operatorname{Ann} (y + a \in A / a)$$
+\end{definition}
+
+\begin{example}
+    In $\Z$, 
+    $$(4 \Z \colon 10 \Z) = 2 \Z, \quad (10 \Z \colon 4 \Z) = 5 \Z$$
+\end{example}
+
+\begin{theorem}
+    Let $p_1, \cdots, p_r$ be prime ideals of $A$ and suppose that $a$ satisfies 
+    $$a \subseteq p_1 \cup \cdots \cup p_n$$
+    Then $\exists j$ s.t $a \subseteq p_j$.
+
+    (Note that the proof below also works if all the $p_i$'s are prime except except for $1$ or $2$ $p_i$'s).
+\end{theorem}
+
+\begin{proof}
+    By induction on $n$: 
+    \begin{itemize}
+        \item $n = 1$: trivial. 
+        \item $n = 2$: Suppose $a \subseteq p_1 \cup p_2$ but $a \not\subseteq p_1$ and $a \not\subseteq p_2$ so $\exists x_1, x_2 \in a$ s.t $x_1 \not\in p_1$, 
+        $x_2 \not\in p_2$. Therefore we must have $x_1 \in p_2$ and $x_2 \in p_1$, then 
+        $$a \ni z := x_1 + x_2 \not\in p_1 \cup p_2$$
+        (If $z \in p_1$ then $x_1 = z - x_2 \in p_1$). 
+        \item Now suppose $n \geq 3$ and we know the result for $n-1$ primes. Suppose that 
+        $$a \subseteq p_1 \cup \cdots \cup p_n$$
+        if $a \subseteq p_1 \cup \cdots p_{n-1}$ (after potentially reordering), then we are okay. 
+        So suppose that $a \not\subseteq p_1 \cup \cdots \cup p_{n-1}$ for any reordering. so $\exists x_j \in a$ with 
+        with $x_j \in p_j$ for every $j$. 
+        
+        Consider $z = x_1 + x_2 x_3 \cdots x_n$, of course $z \in a$ but $z \not\in p_j$ for any $j$ (contradiction)!
+        
+        Now let $x_1 \in p_1$ and $x_2, \cdots, x_n \not\in p_1$ and $p_1$ is prime therefore 
+        $$x_2 \cdots x_n \not\in p_1$$
+        hence $z = x_1 + (x_2 \cdots x_n) \not\in p_1$. Now for $p_2$, we have that 
+        $$x_1 \not\in p_2, \ x_2 \in p_2 \implies x_1 + x_2 x_3 \cdots x_n \not\in p_2$$
+        Similarly for the other $p$'s. 
+    \end{itemize}
+\end{proof}
+
+\section{Modules}
+\begin{lemma}[Nakayama's lemma]
+    Let $A$ be a local ring, with maximal ideal $m$; and Let $M$ be a finitely generated $A$-module. Suppose that 
+    $$m M = M$$
+    (where $m M$ is the set of all finite sums $m_1 y_1 + \cdots + m_r y_r$ with $m_i \in m$ and $y_i \in M$.)\\
+    Then $M = 0$.      
+\end{lemma}
+
+\begin{proof}[Cheap proof]
+    Suppose $M = \angles{x_1, \cdots, x_r}$, we can remove redundant $x_i$'s, therefore we can assume that 
+    $$\forall j, \ x_j \in \angles{x_1, \cdots, \hat{j}, \cdots, x_r}$$
+    If $M \neq 0$ we are left with this set of generators with $r \ge 1$. 
+    But then $x_1 \in M = m M$ therefore 
+    $$x_1 = \sum_{i=1}^r m_i x_i \quad m_i \in m$$
+    Therefore $(1- m_1) x_1 = m_2 z_2 + \cdots + m_r x_r$ but $1 - m_1 \not\in m$ must be a unit in $A$! Therefore 
+    $$x_1 \in \angles{x_2,\cdots, x_r} \quad \text{impossible}$$     
+\end{proof}
+
+\begin{corollary}
+    Fix $(A, m)$ a local ring. Suppose that $M \supseteq N$, $M$ finitely generated and $M = N + m M$ (Equivalently in $M / m M$ the images of $N$ generate everything). 
+    Then $M = N$. 
+\end{corollary}
+
+\begin{proof}
+    Apply Nakayama to $M / N$; note that 
+    $$m \cdot (M/N) = M/N, \quad M/N \text{ is finitely generated}$$
+\end{proof}
+
+\begin{theorem}[General Statement of Nakayama's Lemma]
+    Let $A$ be any (commutative!) ring and let $M$ be a finitely generated $A$-module, let $a \subseteq A$ be an ideal (usually $a = \operatorname{Jrad} A$) and suppose 
+    $$a M = M$$
+    then $\exists b \in 1 + a$ s.t $b M = 0$. 
+
+    In the case where $a$ is the $\operatorname{Jrad} A$ in which case $b \in 1 + a$ is a unit, so $M = 0$. 
+\end{theorem}
+
+\begin{proof}
+    Let $M = \angles{x_1, \cdots, x_r}$, since $M = aM$, we see that $\exists a_{ij} \in a$ s.t 
+    \begin{align*}
+        x_1 &= a_{11} x_1 + \cdots + a_{1r} x_r \in a M \\
+        x_2 &= a_{21} x_1 + \cdots + a_{2r} x_r \in a_M \\
+        &\vdots \\
+        x_r &= a_{r1} x_1 + \cdots + a_{rr} x_r\in a_M
+    \end{align*}
+    Let $P = (a_{ij})_{ij}$ be the matrix of $a_{ij}$'s, rewrite the system above as 
+    \begin{align*}
+        (1 - a_{11}) x_1 - a_{12} x_2 + \cdots - a_{1r} x_r &= 0 \\
+        a_{21} x_1 + (1 - a_{22}) x_2 + \cdots - a_{2r} x_r &= 0 \\
+        &\vdots \\
+    \end{align*}
+    Symbolically we get that 
+    $$(I - P) \begin{pmatrix}
+        x_1 \\ x_2 \\ \vdots \\ x_r
+    \end{pmatrix} = \begin{pmatrix}
+        0 \\ 0 \\ \vdots \\0
+    \end{pmatrix}$$
+    Multiplying on the left by the matrix $Q = (I - P)^{adj} \in M_r(A)$; it has the property that 
+    $$Q (I-P) = \operatorname{diag} (b)$$
+    where $b = \operatorname{det} (I - P) \in 1 + a$; we deduce 
+    $$b x_1 = 0, \ b x_2 = 0, \cdots, \ b x_r = 0$$
+    so $b$ annihilates every generator of $M$, and therefore annihilates all of $M$. 
+\end{proof}
+
+\begin{example}
+    We can use this so that if $(A, m)$ then 
+    $$m \supseteq m^2 \supseteq m^3 \supseteq \cdots$$
+    if $m = m^{n+1}$ then $m^n = 0$. Indeed $m_i / m_{i+1}$ is an $A / m$-module.
+\end{example}
+
+\subsection{Hom functors and exactness} 
+
+\paragraph{Quick reminder.}
+$M, N$ are $A$ Modules, therefore $\operatorname{Hom}_A (M, N)$ is an $A$-module (since $A$ is commutative). Some facts: 
+\begin{itemize}
+    \item We have a natural isomorphism $\operatorname{Hom} (A, N) \cong N$ (as $A$-modules). 
+    \item Have an natural isomorphism 
+    $$\operatorname{Hom} \left( \bigoplus_{\alpha \in I} M_\alpha, N\right) \cong \prod_{\alpha \in I} \operatorname{Hom} (M_\alpha, N)$$
+    $$(\cdots x_\alpha \cdots)_{\text{almost all zeroes}} \xrightarrow{\varphi} \sum_\alpha \varphi_\alpha (x_\alpha)$$
+    But also 
+    $$\operatorname{Hom} (M, \prod_{\beta} N_\beta) \cong \prod_\beta \operatorname{Hom} (M, N_\beta)$$
+    $$x \in M \to (\cdots \psi_\beta (x) \cdots ) \in \prod_\beta N_\beta$$
+
+    \item $0 \to N' \xrightarrow{f} N \xrightarrow{g} N''$ exact implies that 
+    $$0 \to \operatorname{Hom} (M, N') \xrightarrow{f_*} \operatorname{Hom} (M, N) \xrightarrow{g_*} \operatorname{Hom} (M, N'')$$
+    (even if $g$ is surjective, then $g_*$ need not be surjective). 
+
+    Similarly if 
+    $$M' \xrightarrow{u} M \xrightarrow{w} M'' \to 0 \quad \text{exact}$$
+    then 
+    $$0 \to \operatorname{Hom} (M'', N) \xrightarrow{w^*} \operatorname{Hom} (M, N) \xrightarrow{u^*} \operatorname{Hom} (M', N)$$
+    (even if $U$ is injective then $U^*$ need not be surjective).
+\end{itemize}
+\subsection{Presentations of Modules}
+
+Let $A$ be a (commutative) ring and $M$ an $A$-module.
+
+\paragraph{Finite presentation.}
+Say $M$ is generated by $x_1,\dots,x_n$ with relations $r_1,\dots,r_k$, where
+\[
+r_j:\quad a_{j1}x_1+\cdots+a_{jn}x_n=0 \qquad (1\le j\le k).
+\]
+Let $A^n$ have basis $e_1,\dots,e_n$ and $A^k$ have basis $f_1,\dots,f_k$.
+Define $\eta:A^n\to M$ by $\eta(e_i)=x_i$ and define $\Phi:A^k\to A^n$ by
+\[
+\Phi(f_j)=a_{j1}e_1+\cdots+a_{jn}e_n.
+\]
+Then $\eta\circ \Phi=0$, and $\im(\Phi)=\ker(\eta)$ (the relations generate all relations), hence we have an exact sequence
+\[
+A^k \xrightarrow{\ \Phi\ } A^n \xrightarrow{\ \eta\ } M \to 0,
+\qquad\text{so } M \cong \coker(\Phi)=A^n/\im(\Phi).
+\]
+If we write $\Phi$ as a matrix, it is the $n\times k$ matrix $(a_{ji})$ with the convention that the $j$-th column is the coordinate vector of $\Phi(f_j)$ in the basis $(e_i)$.
+
+\paragraph{Infinite presentations.}
+Nothing changes: if $M$ is generated by a family $(x_i)_{i\in I}$ with relations indexed by $J$, one has
+\[
+A^{(J)} \xrightarrow{\ \Phi\ } A^{(I)} \xrightarrow{\ \eta\ } M \to 0,
+\]
+where $A^{(I)}=\bigoplus_{i\in I} A$ and $A^{(J)}=\bigoplus_{j\in J} A$ are free modules on those bases.
+
+\subsection*{Computing \texorpdfstring{$\Hom_A(M,N)$}{Hom(M,N)} from a presentation}
+
+Given an exact sequence
+\[
+A^k \xrightarrow{\ \Phi\ } A^n \xrightarrow{\ \eta\ } M \to 0,
+\]
+apply the contravariant left-exact functor $\Hom_A(-,N)$ to obtain the exact sequence
+\[
+0 \to \Hom_A(M,N) \xrightarrow{\ \eta^* \ } \Hom_A(A^n,N) \xrightarrow{\ \Phi^* \ } \Hom_A(A^k,N),
+\]
+where $\eta^*(\psi)=\psi\circ \eta$ and $\Phi^*(\varphi)=\varphi\circ \Phi$.
+
+\paragraph{Identifications.}
+\begin{itemize}
+\item If $n,k<\infty$ then $\Hom_A(A^n,N)\cong N^n$ and $\Hom_A(A^k,N)\cong N^k$ via
+\[
+\Hom_A(A^n,N)\ni \psi \longleftrightarrow (\psi(e_1),\dots,\psi(e_n))\in N^n.
+\]
+\item More generally, for a free module $A^{(I)}=\bigoplus_{i\in I} A$, one has
+\[
+\Hom_A\!\Big(\bigoplus_{i\in I} A,\,N\Big)\cong \prod_{i\in I} \Hom_A(A,N)\cong \prod_{i\in I} N.
+\]
+(Important: \emph{direct sum} on the left becomes a \emph{direct product} on the right.)
+\end{itemize}
+
+Under the finite identifications, the map $\Phi^*:N^n\to N^k$ is given explicitly by
+\[
+(y_1,\dots,y_n)\longmapsto (z_1,\dots,z_k),
+\qquad
+z_j=a_{j1}y_1+\cdots+a_{jn}y_n.
+\]
+Therefore
+\[
+\Hom_A(M,N)\cong \ker\!\big(N^n \xrightarrow{\ \Phi^*\ } N^k\big).
+\]
+Equivalently: an $A$-linear map $M\to N$ is determined by the images of the generators $x_i$, and the only constraints are that the relations $r_j$ hold after applying the map.
+
+% --------------------------------------------------------------------
+
+\subsection{Tensor Product of Modules (review)}
+
+Assume $A$ is commutative (so that left/right issues disappear).
+
+\paragraph{Bilinear maps.}
+For $A$-modules $M,N,P$, let $\Bil_A(M\times N,P)$ be the set of maps
+$\beta:M\times N\to P$ which are $A$-linear in each variable:
+\[
+\beta(x_1+x_2,y)=\beta(x_1,y)+\beta(x_2,y),\quad
+\beta(ax,y)=a\beta(x,y),
+\]
+and similarly in the second variable.
+
+There is a natural bijection
+\[
+\Bil_A(M\times N,P)\ \cong_{\mathrm{nat}}\ \Hom_A\big(M,\Hom_A(N,P)\big),
+\]
+sending $\beta$ to the map $x\mapsto (y\mapsto \beta(x,y))$.
+
+\paragraph{Universal property of the tensor product.}
+The tensor product $M\otimes_A N$ is an $A$-module equipped with a bilinear map
+\[
+\tau:M\times N\to M\otimes_A N,\qquad (x,y)\mapsto x\otimes y,
+\]
+such that for every $A$-module $P$, composition with $\tau$ induces a natural isomorphism
+\[
+\Hom_A(M\otimes_A N,\,P)\ \cong_{\mathrm{nat}}\ \Bil_A(M\times N,\,P).
+\]
+
+\paragraph{Concrete construction.}
+One can construct $M\otimes_A N$ as the quotient of the free $A$-module
+$F$ on symbols $(x,y)$, by the submodule generated by the bilinearity relations:
+\begin{align*}
+(x_1+x_2,y)-(x_1,y)-(x_2,y),\qquad &(ax,y)-a(x,y),\\
+(x,y_1+y_2)-(x,y_1)-(x,y_2),\qquad &(x,ay)-a(x,y).
+\end{align*}
+The class of $(x,y)$ is denoted $x\otimes y$.
+
+\paragraph{Standard isomorphisms.}
+There are natural isomorphisms
+\[
+A\otimes_A N \cong N,\qquad
+\Big(\bigoplus_\alpha M_\alpha\Big)\otimes_A N \cong \bigoplus_\alpha (M_\alpha\otimes_A N),
+\qquad
+M\otimes_A N \cong N\otimes_A M,
+\]
+and associativity up to canonical isomorphism:
+\[
+(M\otimes_A N)\otimes_A Z \cong M\otimes_A (N\otimes_A Z).
+\]
+
+\subsection*{Functoriality of \texorpdfstring{$\otimes$}{tensor}}
+
+Given $A$-linear maps $f:M_1\to M_2$ and $g:N_1\to N_2$, there is a unique $A$-linear map
+\[
+f\otimes g:\ M_1\otimes_A N_1 \to M_2\otimes_A N_2
+\]
+satisfying on simple tensors
+\[
+(f\otimes g)(x\otimes y)=f(x)\otimes g(y).
+\]
+Hence for a general tensor $t=\sum_i a_i(x_i\otimes y_i)$,
+\[
+(f\otimes g)(t)=\sum_i a_i\big(f(x_i)\otimes g(y_i)\big).
+\]
+
+\subsection*{Extension of scalars}
+
+Let $f:A\to B$ be a ring homomorphism and let $M$ be an $A$-module. Then $B\otimes_A M$
+is naturally a \emph{$B$-module} via multiplication on the left factor:
+\[
+b\cdot (b'\otimes m) := (bb')\otimes m.
+\]
+(Equivalently: the action comes from $\mu_b\otimes 1_M$, where $\mu_b:B\to B$ is multiplication by $b$.)
+
+\begin{example}[Polynomials]
+If $B=A[x]$, then as an $A$-module,
+\[
+A[x]\cong \bigoplus_{d\ge 0} A\cdot x^d,
+\]
+so
+\[
+A[x]\otimes_A M \cong \bigoplus_{d\ge 0} (A\cdot x^d)\otimes_A M \cong \bigoplus_{d\ge 0} M.
+\]
+Under this identification, $x^d\otimes m$ corresponds to $m\,x^d$, and one gets
+\[
+A[x]\otimes_A M \cong M[x]
+\]
+(the module of polynomials with coefficients in $M$).
+
+If $\mathfrak a\subseteq A$ is an ideal (viewed as an $A$-module), then
+\[
+A[x]\otimes_A \mathfrak a \cong \mathfrak a[x].
+\]
+Inside $A[x]$, this is the extended ideal $\mathfrak a^e := \mathfrak a\cdot A[x]$.
+\end{example}
+
+\paragraph{Tensoring algebras.}
+If $A$ is commutative and $B,C$ are (commutative) $A$-algebras, then $B\otimes_A C$ is an $A$-algebra with multiplication determined by
+\[
+(b\otimes c)\cdot(b'\otimes c') := (bb')\otimes (cc').
+\]
+
+\begin{example}
+There is a natural isomorphism of $A$-algebras
+\[
+A[x]\otimes_A B \cong B[x].
+\]
+\end{example}
+
+% --------------------------------------------------------------------
+
+\subsection{Exactness properties of \texorpdfstring{$-\otimes_A N$}{- tensor N}}
+
+\paragraph{Right exactness.}
+The functor $-\otimes_A N$ is \emph{right exact}: if
+\[
+M' \xrightarrow{f} M \xrightarrow{g} M'' \to 0
+\]
+is exact, then
+\[
+M'\otimes_A N \xrightarrow{f\otimes 1} M\otimes_A N \xrightarrow{g\otimes 1} M''\otimes_A N \to 0
+\]
+is exact.
+
+Warning: it need not be left exact (injectivity can fail).
+
+\paragraph{Example: quotients / extended ideals.}
+From $0\to \mathfrak a \to A \to A/\mathfrak a \to 0$ we get
+\[
+\mathfrak a\otimes_A B \to A\otimes_A B \to (A/\mathfrak a)\otimes_A B \to 0.
+\]
+Using $A\otimes_A B\cong B$, the last map identifies $(A/\mathfrak a)\otimes_A B$ with
+\[
+B/\mathfrak a^e,\qquad \mathfrak a^e=\mathfrak a\cdot B.
+\]
+
+\subsection*{Computing \texorpdfstring{$M\otimes_A N$}{M tensor N} from a presentation}
+
+If $M$ has a presentation
+\[
+A^k \xrightarrow{\ \Phi\ } A^n \to M \to 0,
+\]
+then tensoring with $N$ gives an exact sequence
+\[
+N^k \cong A^k\otimes_A N \xrightarrow{\ \Phi\otimes 1\ } A^n\otimes_A N \cong N^n \to M\otimes_A N \to 0.
+\]
+Hence
+\[
+M\otimes_A N \cong \coker(\Phi\otimes 1),
+\]
+and under the identifications $A^k\otimes N\cong N^k$, $A^n\otimes N\cong N^n$, the map
+$\Phi\otimes 1: N^k\to N^n$ is given by the \emph{same matrix} $(a_{ji})$:
+\[
+(u_1,\dots,u_k)\longmapsto \Big(\sum_{j=1}^k a_{j1}u_j,\ \dots,\ \sum_{j=1}^k a_{jn}u_j\Big).
+\]
+
+Equivalently: $M\otimes_A N$ is generated by $x_i\otimes y$ ($i=1,\dots,n$, $y\in N$),
+with relations coming from:
+\begin{itemize}
+\item bilinearity in $y$ (so $x_i\otimes (y+y')=x_i\otimes y+x_i\otimes y'$ and $x_i\otimes (ay)=a(x_i\otimes y)$),
+\item and the original relations of $M$: if $\sum_i c_i x_i=0$ in $M$, then for every $y\in N$,
+\[
+\sum_i c_i (x_i\otimes y)=0 \quad \text{in } M\otimes_A N.
+\]
+\end{itemize}
+
+\subsection*{Conceptual proof of right exactness (via adjunction)}
+
+\subsection*{Conceptual proof of right exactness (via adjunction)}
+
+Recall the adjunction: for any $A$-modules $X,N,P$ there is a natural isomorphism
+\[
+\Hom_A(X\otimes_A N,\,P)\ \cong\ \Hom_A\big(X,\Hom_A(N,P)\big),
+\]
+equivalently
+\[
+\Hom_A(X\otimes_A N,\,P)\ \cong\ \Bil_A(X\times N,\,P).
+\]
+
+\begin{lemma}
+Let $Q \xrightarrow{\lambda} R \xrightarrow{\mu} S \to 0$ be a sequence of $A$-modules.
+Assume that for every $A$-module $P$ the sequence
+\[
+0 \to \Hom_A(S,P) \xrightarrow{\mu^*} \Hom_A(R,P) \xrightarrow{\lambda^*} \Hom_A(Q,P)
+\]
+is exact. Then $Q \xrightarrow{\lambda} R \xrightarrow{\mu} S \to 0$ is exact.
+\end{lemma}
+
+\begin{proof}[Sketch]
+Surjectivity of $\mu$ follows by taking $P=S/\im(\mu)$ and considering the natural quotient map.
+To show $\ker(\mu)\subseteq \im(\lambda)$, take $P=\coker(\lambda)=R/\im(\lambda)$ and let
+$\varphi:R\to \coker(\lambda)$ be the quotient map. Then $\varphi\circ\lambda=0$, so
+$\varphi\in\ker(\lambda^*)=\im(\mu^*)$, hence $\varphi=\psi\circ\mu$ for some $\psi:S\to\coker(\lambda)$.
+If $r\in\ker(\mu)$ then $\varphi(r)=\psi(\mu(r))=0$, so $r\in\ker(\varphi)=\im(\lambda)$.
+\end{proof}
+
+Now suppose $M' \xrightarrow{f} M \xrightarrow{g} M'' \to 0$ is exact.
+Fix an $A$-module $P$ and apply the left exact functor
+$\Hom_A(-,\Hom_A(N,P))$ to obtain an exact sequence
+\[
+0\to \Hom_A(M'',\Hom_A(N,P))
+\to \Hom_A(M,\Hom_A(N,P))
+\to \Hom_A(M',\Hom_A(N,P)).
+\]
+Using the adjunction isomorphisms, this becomes
+\[
+0\to \Hom_A(M''\otimes_A N,P)
+\to \Hom_A(M\otimes_A N,P)
+\to \Hom_A(M'\otimes_A N,P).
+\]
+Since this holds for all $P$, the lemma implies that
+\[
+M'\otimes_A N \xrightarrow{f\otimes 1} M\otimes_A N \xrightarrow{g\otimes 1} M''\otimes_A N \to 0
+\]
+is exact, i.e. $-\otimes_A N$ is right exact.
+
+\section{Localization of rings and modules} 
+
+\textbf{Intuition for example.}
+Let $A$ be a ring (pretend $A = k[x_1, \cdots, x_n] / \mathfrak{a}$ = polynomial functions on $V(\mathfrak{a}) \subseteq k^n$).
+So $f \in A$ is basically $f \colon V(\mathfrak{a}) \to k$, let $V(f) = V(\angles{f} + \mathfrak{a})$ be the set where $f = 0$.
+We can look at 
+$$V(\mathfrak{a}) - V(f).$$
+What are polynomial functions on this? Intuitively they look like fractions
+$$a / f^n,\qquad a\in A,\ n\ge 0,$$
+i.e.\ we allow denominators which are powers of $f$ (so we ``ignore'' what happens on $V(f)$).
+
+We try to define 
+$$A_f = \set{\frac{a}{f^n} \colon a \in A, \ n \ge 0}.$$
+Question: when is $\frac{a}{f^n} = \frac{b}{f^m}$?
+Note we can rewrite as
+$$\frac{a f^{m+k}}{f^{n+m+k}} = \frac{b f^{n + k}}{f^{n+m+k}}.$$
+Therefore $\frac{a}{f^n} = \frac{b}{f^m}$ iff $\exists k$ s.t 
+$$f^k(af^m) = f^k(bf^n),$$
+i.e.
+$$f^k(af^m - bf^n) = 0.$$
+
+\begin{remark}
+    In our hw look at 2.1, this describes exactly $A[x] / \angles{xf-1}$.
+\end{remark}
+
+\begin{definition}
+    Let $A$ be a ring, let $S \subseteq A$ be a multiplicatively closed set, define a relation $\sim$ on $A \times S$ as follows: 
+    $$(a, s) \sim (b,t) \iff \exists u \in S \text{ s.t } u(ta - sb)=0.$$
+\end{definition}
+
+\begin{example}
+    if $f \in A$, the set 
+    $$\set{1, f, f^2, \cdots}$$
+    is multiplicatively closed. 
+
+    If $\mathfrak{p} \subset A$ is prime, then $A - \mathfrak{p}$ is multiplicatively closed. 
+\end{example}
+
+\begin{proposition}
+    $\sim$ is an equivalence relation. 
+\end{proposition}
+
+\begin{proof}
+    Exercise.
+\end{proof}
+
+\begin{definition}
+    We define $S^{-1}A$ (also written as $A_S$) to be the set of equivalence classes of $\sim$. So an element of $S^{-1} A$ is a symbol 
+    $$\frac{a}{s}.$$
+    Note that 
+    $$\frac{a}{s} = \frac{b}{t} \iff \exists u \in S \text{ s.t } u(ta - sb)=0.$$
+\end{definition}
+
+\begin{proposition}
+    The operations 
+    \begin{align*}
+        \frac{a}{s} + \frac{b}{t} &= \frac{ta + sb}{st} \\
+        \frac{a}{s} \cdot \frac{b}{t} &= \frac{ab}{st}
+    \end{align*}    
+    are well defined, and they turn $S^{-1}A$ into a ring with 
+    $$0 = \frac{0}{1}, \ 1 = \frac{1}{1}.$$
+\end{proposition}
+
+\textbf{Notation.}
+If $S = \set{1,f,f^2, \cdots}$ then we write $A_f$ instead of $S^{-1}A$.
+If $S = A - \mathfrak{p}$ we write $A_{\mathfrak{p}}$.
+
+\begin{example}
+    In $\Z$ we write 
+    $$\Z_f = \set{\frac{a}{f^n} \in \Q \mid \ a \in \Z, \ n \ge 0}.$$
+    And 
+    $$\Z_{\angles{p}} = \set{\frac{a}{b} \in \Q \mid \ a,b \in \Z,\ p \nmid b}.$$
+\end{example}
+
+\begin{remark}
+    There is a ring homomorphism $\varphi \colon A \to S^{-1} A$ by $\varphi(a) = a/1$. But note that $\varphi$ is not necessarily injective.
+
+    For example take $(\Z / 6 \Z)$ localized at $S = \set{1,3}$. Then 
+    $$S^{-1}(\Z / 6 \Z) = \set{0/1, 1/1} \cong \Z / 2 \Z.$$
+    This is because $3$ becomes a unit, so the $\Z/3\Z$-part disappears. Concretely:
+    \begin{align*}
+        2/1 &= \frac{3 \cdot 2}{3} = 0,
+    \end{align*}
+    hence $\set{0,2,4} \subseteq \ker \varphi$. Also
+    $$\frac{1}{3} = \frac{3 \cdot 1}{3\cdot 3} = \frac{3}{3} = \frac{1}{1}.$$
+    Using CRT: $\Z/6\Z \cong \Z/2\Z \times \Z/3\Z$. Inverting $3$ makes $(1,0)$ invertible, which forces the second factor to be $0$, leaving $\Z/2\Z$.
+\end{remark}
+
+\begin{example}
+    Let $A=\C[x,y]/\angles{xy}$, these are functions on the union of the two coordinate axes in $\C^2$. Localize at $x$:
+    $$A_x \cong \C[x,x^{-1}].$$
+    Therefore 
+    $$\frac{y}{1} = \frac{xy}{x} = 0,$$
+    so $y \in \ker \varphi$ (intuitively: on $D(x)$ we are away from the $y$-axis, so $y$ vanishes there).
+\end{example}
+
+We also have the UMP. Let $\iota:A\to S^{-1}A$ be $\iota(a)=a/1$. Then for any ring $B$ and any ring map $g:A\to B$ such that $g(S)\subseteq B^\times$, there exists a unique ring map $\tilde g:S^{-1}A\to B$ with $\tilde g\circ \iota=g$. Concretely
+$$\tilde g(a/s)=g(a)\,g(s)^{-1}.$$
+The diagram is:
+\[
+\begin{tikzcd}
+A \arrow[r,"\iota"] \arrow[dr,"g"'] & S^{-1}A \arrow[d,dashed,"\tilde g"] \\
+& B
+\end{tikzcd}
+\]
+
+\begin{remark}
+    $0 \in S$ $\iff S^{-1} A$ is the zero ring.  
+\end{remark}
+
+Soon we will also localize modules; we will get a module over $S^{-1}A$.
+Define
+$$S^{-1} M = \set{\frac{x}{s} \mid x \in M, \ s \in S}$$
+with 
+$$\frac{x}{s} = \frac{y}{t} \iff \exists u \in S \text{ s.t } u(tx - sy)=0.$$
+
+\subsection{Ideals in the Localization} 
+We will especially look at extensions and contractions of ideals for the homomorphism
+$$\varphi \colon A \to S^{-1} A.$$
+
+\begin{proposition}
+    If $\mathfrak{b} \subseteq S^{-1}A$ is an ideal, then 
+    $$\mathfrak{b}^{ce} = \mathfrak{b}.$$
+    Consequently all ideals of a localization are extensions of something. 
+\end{proposition}
+
+\begin{proof}
+    $\mathfrak{b} \supseteq \mathfrak{b}^{ce}$ (always). 
+
+    Conversely, let $\frac{a}{s} \in \mathfrak{b}$. Then $s (\frac{a}{s}) = \frac{a}{1}$ so $a \in \mathfrak{b}^c$, hence $\frac{a}{1} \in \mathfrak{b}^{ce}$ and so
+    $$\frac{1}{s} \cdot \frac{a}{1} = \frac{a}{s} \in \mathfrak{b}^{ce}.$$
+\end{proof}
+
+\begin{proposition}
+    Let $\mathfrak{a} \subseteq A$ be an ideal. Then 
+    $$\mathfrak{a}^e = \set{\frac{a}{s} \mid a \in \mathfrak{a}, \ s \in S}$$
+    (i.e.\ $S^{-1}\mathfrak a$ inside $S^{-1}A$), and
+    $$\mathfrak{a}^{ec} = \set{x \in A \mid \exists s \in S \text{ s.t } sx \in \mathfrak{a}}.$$
+\end{proposition}
+
+\begin{example}
+    Think of $A = \Z$ and $S = \set{1, 6, 6^2, \cdots}$ therefore 
+    $$S^{-1} A = \Z[1/6].$$
+    Then $(99 \Z)^{ec} = 11 \Z = (11 \Z)^{ec}$.
+    Indeed $x\in(99\Z)^{ec}$ iff $\exists n$ such that $6^n x\in 99\Z$.
+    For $n\ge 2$, $6^n$ contributes a factor $3^n$, so the $3^2$ part is automatic, and the condition becomes exactly $11\mid x$.
+\end{example}
+
+Notice that elements of $\mathfrak{a}^e$ are of the form 
+$$\varphi(a_1) \cdot (\frac{b_1}{s_1}) + \cdots + \varphi(a_k) \cdot (\frac{b_k}{s_k})$$
+with $a_i \in \mathfrak{a}, \ b_i \in A, \ s_i \in S$. Take a common denominator 
+$$s = s_1 \cdots s_k,$$
+so $\frac{b_i}{s_i} = \frac{c_i}{s}$ with $c_i = b_i \prod_{j\ne i} s_j$, hence wlog we have 
+$$\frac{a_1}{1} \cdot \frac{c_1}{s} + \cdots + \frac{a_k}{1} \cdot \frac{c_k}{s}.$$
+
+\begin{corollary}
+    If $\mathfrak{a} = \angles{x_1, \cdots, x_r} \subset A$ then 
+    $$\mathfrak{a}^e = \angles{\frac{x_1}{1}, \cdots, \frac{x_r}{1}}.$$
+\end{corollary}
+
+\begin{corollary}
+    If $A$ is Noetherian, then so is $S^{-1} A$ (and every ideal of $S^{-1}A$) by the above corollary.
+\end{corollary}
+
+\paragraph{Prime ideals in $S^{-1}A$}
+\begin{theorem}
+    \begin{enumerate}
+        \item 
+        If $\mathfrak{q} \subset S^{-1}A$ is prime, then 
+        $\mathfrak{p} := \mathfrak{q}^c \subset A$ is prime and 
+        $$\mathfrak{p} \cap S = \varnothing.$$
+
+        \item If $\mathfrak{p} \subset A$ is prime and 
+        $$\mathfrak{p} \cap S = \varnothing,$$
+        then $\mathfrak{p}^e \subset S^{-1}A$ is also prime. 
+
+        \item Extension and contraction are mutually inverse bijections between the sets 
+        $$\set{\mathfrak{p} \subset A \text{ prime} \mid \mathfrak{p} \cap S = \varnothing} \leftrightarrows \set{\mathfrak{q} \subset S^{-1}A \ \text{prime}}.$$
+    \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+    This clarifies: if $\mathfrak{a} \subset A$ and $\mathfrak{a} \cap S = \varnothing$, then $\mathfrak{a}^e \subsetneq S^{-1}A$.
+    Hence $\mathfrak{a}^e$ is contained in some maximal ideal $\mathfrak{m}\subset S^{-1}A$.
+    Contracting gives a prime $\mathfrak{p}=\mathfrak{m}^c\subset A$ with $\mathfrak{a}\subseteq \mathfrak{p}$ and $\mathfrak{p}\cap S=\varnothing$.
+\end{remark}
+
+\begin{proof}
+    \begin{enumerate}
+        \item We are given $\mathfrak{q}$ is prime, then $\mathfrak{q}^c$ is prime (contraction preserves primality).
+        Also if $\exists s \in S \cap \mathfrak{q}^c$ then $s/1 \in \mathfrak{q}$, but $s/1$ is a unit in $S^{-1}A$ (inverse $1/s$), contradiction since $\mathfrak{q} \subsetneq S^{-1}A$. 
+
+        \item Suppose we have two elements of $S^{-1}A$ whose product is in $\mathfrak{p}^e$.
+        Call these elements $a/s$ and $b/t$ with $a,b\in A$ and $s,t\in S$.
+        Then 
+        $$\frac{ab}{st} \in \mathfrak{p}^e.$$
+        So $\exists u \in S$ such that $uab \in \mathfrak{p}$ (clearing denominators).
+        Since $u\in S$ and $\mathfrak{p}\cap S=\varnothing$, we have $u\notin \mathfrak{p}$; by primality,
+        $$a \in \mathfrak{p} \ \text{or}\  b \in \mathfrak{p}.$$
+        Hence $a/s$ or $b/t$ lies in $\mathfrak{p}^e$. 
+        
+        \item For any ideal $\mathfrak{q}\subset S^{-1}A$, we already proved $\mathfrak{q}^{ce}=\mathfrak{q}$.
+        Now let $\mathfrak{p}\subset A$ be prime with $\mathfrak{p}\cap S=\varnothing$. Clearly $\mathfrak{p}^{ec} \supseteq \mathfrak{p}$.
+        Take $a \in \mathfrak{p}^{ec}$, so $a/1 \in \mathfrak{p}^e$. Then $\exists s\in S$ such that $sa\in\mathfrak{p}$.
+        But $s\notin\mathfrak{p}$, so $a\in\mathfrak{p}$ by primality. Thus $\mathfrak{p}^{ec}=\mathfrak{p}$.
+    \end{enumerate}
+\end{proof}
+
+\begin{proposition}
+    $S^{-1}M \cong_{nat} (S^{-1} A) \otimes_A M$ 
+    $$x/s \leftrightarrows \frac{1}{s} \otimes x.$$
+\end{proposition}
+
+
+\end{document}
