@@ -93,8 +93,9 @@ breaklines=true
 \newcommand{\norm}[1]{\lVert #1 \rVert}
 \newcommand{\Bil}{\operatorname{Bil}}
 \newcommand{\Hom}{\operatorname{Hom}}
-\newcommand{\im}{\operatorname{Im}}
+\newcommand{\im}{\operatorname{im}}
 \newcommand{\coker}{\operatorname{coker}}
+\newcommand{\Ann}{\operatorname{Ann}}
 
 % \usepackage{mathtools} 
 % \DeclarePairedDelimiter{\angles}{\langle}{\rangle} 
@@ -211,7 +212,7 @@ Basic observations
 $$\mathfrak{a}^{ec} \supseteq \mathfrak{a}, \quad \mathfrak{b}^{ce} \subseteq \mathfrak{b}$$
 but notice that 
 $$\mathfrak{a} = \mathfrak{a}^e, \quad \mathfrak{b}^{cec} = \mathfrak{b}^c$$
-\textbf{Important fact.} if $q \subseteq B$ is prime then so is $q^c$ therefore 
+\textbf{important fact.} if $q \subseteq B$ is prime then so is $q^c$ therefore 
 $$A / q^c \xrightarrow{\text{subdomain}} B / q$$
 \begin{example}
     $\Z \to \Q$, $(6 \Z)^e = \Q$, 
@@ -311,7 +312,7 @@ $$a_i + a_j = A \iff \exists x \in a_i, \ y \in a_j \text{ s.t } x + y = 1$$
 \subsection{Algebras} 
 \begin{definition}
     An \emph{$A$-algebra} is a ring $R$ (not necc. commutative) with a ring homomorphism $f \colon A \to R$ s.t 
-    $$\operatorname{Im} f \subseteq \text{ center of } R$$
+    $$\operatorname{im} f \subseteq \text{ center of } R$$
     We will generally stick to the case where $R$ is commutative. 
 \end{definition}
 
@@ -514,7 +515,7 @@ where $\eta^*(\psi)=\psi\circ \eta$ and $\Phi^*(\varphi)=\varphi\circ \Phi$.
 \[
 \Hom_A\!\Big(\bigoplus_{i\in I} A,\,N\Big)\cong \prod_{i\in I} \Hom_A(A,N)\cong \prod_{i\in I} N.
 \]
-(Important: \emph{direct sum} on the left becomes a \emph{direct product} on the right.)
+(important: \emph{direct sum} on the left becomes a \emph{direct product} on the right.)
 \end{itemize}
 
 Under the finite identifications, the map $\Phi^*:N^n\to N^k$ is given explicitly by
@@ -1154,7 +1155,7 @@ S^{-1}f:S^{-1}M\to S^{-1}N,
     \[
     M\xrightarrow{f}N\xrightarrow{g}P
     \]
-    be exact at $N$, i.e. $\Im(f)=\ker(g)$.
+    be exact at $N$, i.e. $\im(f)=\ker(g)$.
 
     We claim that
     \[
@@ -1162,7 +1163,7 @@ S^{-1}f:S^{-1}M\to S^{-1}N,
     \]
     is exact at $S^{-1}N$.
 
-    Trivially $\Im(S^{-1}f)\subseteq\ker(S^{-1}g)$ since $gf=0$.
+    Trivially $\im(S^{-1}f)\subseteq\ker(S^{-1}g)$ since $gf=0$.
 
     Now let $y/s\in\ker(S^{-1}g)$. Then
     \[
@@ -1173,7 +1174,7 @@ S^{-1}f:S^{-1}M\to S^{-1}N,
     ug(y)=0,
     \quad\text{i.e.}\quad g(uy)=0.
     \]
-    Thus $uy\in\ker(g)=\Im(f)$, so $uy=f(x)$ for some $x\in M$. Therefore
+    Thus $uy\in\ker(g)=\im(f)$, so $uy=f(x)$ for some $x\in M$. Therefore
     \[
     \frac{y}{s}
     =
@@ -1183,10 +1184,10 @@ S^{-1}f:S^{-1}M\to S^{-1}N,
     =
     (S^{-1}f)\!\left(\frac{x}{us}\right),
     \]
-    proving $\ker(S^{-1}g)\subseteq\Im(S^{-1}f)$.
+    proving $\ker(S^{-1}g)\subseteq\im(S^{-1}f)$.
 \end{proof}
 
-\textbf{Immediate consequences of exactness.}
+\textbf{immediate consequences of exactness.}
 
 Let $M\xrightarrow{f}N$ be any homomorphism. Then localization preserves kernels, cokernels, and images:
 \[
@@ -1194,7 +1195,7 @@ S^{-1}(\ker f)=\ker(S^{-1}f),
 \qquad 
 S^{-1}(\coker f)=\coker(S^{-1}f),
 \qquad 
-S^{-1}(\Im f)=\Im(S^{-1}f).
+S^{-1}(\im f)=\im(S^{-1}f).
 \]
 
 If $N\subseteq M$, then
