@@ -18,23 +18,22 @@
 %----- FANCY HEADERS & FOOTERS -----
 \usepackage{fancyhdr}
 \pagestyle{fancy}
-\fancyhf{}
-% page number outside, header text inside
+\fancyhf{} % clear all
 
-\fancyhead[LO]{\small \rightmark}
-\fancyhead[RO]{\small \leftmark}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0pt}
-
-\usepackage{bookmark}
-
-% make sections feed into \leftmark/\rightmark
+% Put section/subsection marks into \leftmark/\rightmark (article class needs this)
 \renewcommand{\sectionmark}[1]{\markboth{#1}{}}
 \renewcommand{\subsectionmark}[1]{\markright{#1}}
 
-%----- SECTION NUMBERING & TOC DEPTH -----
-\setcounter{secnumdepth}{3}  % number down to \subsubsection
-\setcounter{tocdepth}{2}     % show ToC down to \subsection
+% Inside header = text, outside header = page number (works in one-sided article too)
+\fancyhead[L]{\small \rightmark}  % inside on odd pages (and all pages in oneside)
+\fancyhead[R]{\small \leftmark}   % inside counterpart; adjust if you prefer
+
+\fancyfoot[R]{\thepage}           % page number "outside" (right) in oneside article
+% If you prefer the page number in the header instead, use:
+% \fancyhead[R]{\thepage} and move the text to \fancyhead[L]{...} only.
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
 
 %----- AMS MATH & THEOREM STYLES -----
 \usepackage{amsmath,amssymb,mathtools}
@@ -845,7 +844,7 @@ If $S = A - \mathfrak{p}$ we write $A_{\mathfrak{p}}$.
     $$A_x \cong \C[x,x^{-1}].$$
     Therefore 
     $$\frac{y}{1} = \frac{xy}{x} = 0,$$
-    so $y \in \ker \varphi$ (intuitively: on $D(x)$ we are away from the $y$-axis, so $y$ vanishes there).
+    so $y \in \ker \varphi$ (intuitively: on $U_x$ we are away from the $y$-axis, so $y$ vanishes there).
 \end{example}
 
 We also have the UMP. Let $\iota:A\to S^{-1}A$ be $\iota(a)=a/1$. Then for any ring $B$ and any ring map $g:A\to B$ such that $g(S)\subseteq B^\times$, there exists a unique ring map $\tilde g:S^{-1}A\to B$ with $\tilde g\circ \iota=g$. Concretely
@@ -1646,19 +1645,217 @@ so finitely many $f_{i_1},\dots,f_{i_k}$ generate the unit ideal, hence
     If $A$ is a Noetherian ring, then all subsets of $\Spec A$ are quasi-compact. 
 \end{corollary}
 
-\subsubsection*{Restriction to open sets}
+\subsection{Local vanishing and quasi-compactness}
 
-\begin{proposition}
-Let $M$ be an $A$-module and $x\in M$.
-
-\begin{enumerate}
-\item If $x/1=0$ in $M_{\mathfrak p}$, then there exists $f\notin\mathfrak p$
-such that $x/1=0$ in $M_f$.
-
-\item If $\Spec(A)=U_{f_1}\cup\cdots\cup U_{f_n}$ and $x/1=0$ in each $M_{f_i}$,
-then $x=0$ in $M$.
-\end{enumerate}
+\begin{proposition}\label{prop:local-vanishing}
+    Let $A$ be a ring, $M$ an $A$-module, $x\in M$, and $\mathfrak p\in \Spec A$.
+    \begin{enumerate}
+    \item If $x/1=0$ in $M_{\mathfrak p}$, then there exists $f\notin\mathfrak p$
+    such that $x/1=0$ in $M_f$.
+    \item If $\Spec(A)=U_{f_1}\cup\cdots\cup U_{f_n}$ and $x/1=0$ in each $M_{f_i}$,
+    then $x=0$ in $M$. In particular, the same conclusion holds for any open cover
+    (because $\Spec A$ is quasi-compact, so there is a finite subcover).
+    \end{enumerate}
 \end{proposition}
 
+\begin{proof}
+\begin{enumerate}
+\item $x/1=0$ in $M_{\mathfrak p}$ means: there exists $s\in A\setminus\mathfrak p$
+such that $sx=0$ in $M$. Take $f=s$. Then in $M_f$ we have
+\[
+x/1 = (fx)/f = 0/f = 0,
+\]
+so $x/1=0$ in $M_f$.
+\item Since $\Spec A=\bigcup_{i=1}^n U_{f_i}$, the ideal $(f_1,\dots,f_n)=A$,
+so there exist $r_1,\dots,r_n\in A$ with
+\[
+1=r_1f_1+\cdots+r_nf_n.
+\]
+For each $i$, the condition $x/1=0$ in $M_{f_i}$ is equivalent to
+$\exists N_i\ge 0$ such that $f_i^{N_i}x=0$ in $M$.
+Let $N=\max_i N_i$, so $f_i^N x=0$ for all $i$.
+
+Now expand
+\[
+x = 1^{nN}x = (r_1f_1+\cdots+r_nf_n)^{nN}x.
+\]
+Every monomial in the expansion is divisible by $f_i^N$ for some $i$
+(pigeonhole principle: $nN$ factors distributed among $n$ indices),
+hence each monomial kills $x$. Therefore the whole sum is $0$, so $x=0$.
+\end{enumerate}
+\end{proof}
+
+\begin{remark}\label{rem:ann-support}
+Fix $x\in M$. Consider the set
+\[
+Z(x)=\{\mathfrak p\in \Spec A \mid x/1=0\text{ in }M_{\mathfrak p}\}.
+\]
+By Proposition~\ref{prop:local-vanishing}(1), $Z(x)$ is open.
+
+Moreover one checks:
+\[
+Z(x)=\bigcup_{s\in \Ann(x)} U_{s} = U_{\Ann(x)},
+\]
+and hence its complement is closed:
+\[
+\{\mathfrak p\mid x/1\neq 0\} = \Spec A\setminus Z(x)=V(\Ann(x)).
+\]
+(So the “nonvanishing locus” of $x$ is $V(\Ann(x))$, and the vanishing locus is $U_{\Ann(x)}$.)
+\end{remark}
+
+\begin{proposition}\label{prop:fg-local-zero}
+Suppose $M$ is finitely generated and $M_{\mathfrak p}=0$ for some $\mathfrak p\in \Spec A$.
+Then there exists $g\notin\mathfrak p$ such that $M_g=0$ (equivalently, $U_g$ is an open
+neighborhood of $\mathfrak p$ on which $M$ localizes to zero).
+\end{proposition}
+
+\begin{proof}
+Choose generators $M=\langle x_1,\dots,x_n\rangle$. The assumption $M_{\mathfrak p}=0$
+means $x_i/1=0$ in $M_{\mathfrak p}$ for each $i$. By
+Proposition~\ref{prop:local-vanishing}(1), for each $i$ there exists $f_i\notin\mathfrak p$
+such that $x_i/1=0$ in $M_{f_i}$. Set $g=f_1\cdots f_n\notin \mathfrak p$.
+Then $M_g=(M_{f_i})_{g}$, so each $x_i/1$ maps to $0$ in $M_g$.
+Since the images of the $x_i$ generate $M_g$, we get $M_g=0$.
+\end{proof}
+
+\paragraph{Local freeness spreads out (Noetherian / finitely presented case).}
+\begin{theorem}\label{thm:spread-out-free}
+Assume either:
+\begin{itemize}
+\item $A$ is Noetherian and $M$ is finitely generated, \quad or
+\item $M$ is finitely presented (no hypothesis on $A$).
+\end{itemize}
+If for some $\mathfrak p\in \Spec A$ the localized module $M_{\mathfrak p}$ is free of rank $n$,
+i.e.\ $M_{\mathfrak p}\cong A_{\mathfrak p}^n$, then there exists $f\notin\mathfrak p$ such that
+\[
+M_f \cong A_f^n.
+\]
+\end{theorem}
+
+\begin{proof}
+Pick elements $x_1,\dots,x_n\in M$ such that their images form a basis of $M_{\mathfrak p}$
+over $A_{\mathfrak p}$.
+
+Define $\varphi:A^n\to M$ by $\varphi(e_i)=x_i$.
+After localizing at $\mathfrak p$, the map
+\[
+\varphi_{\mathfrak p}:(A^n)_{\mathfrak p}\to M_{\mathfrak p}
+\]
+is an isomorphism by construction (the $x_i/1$ are a basis).
+
+Let $K=\ker(\varphi)$ and $C=\coker(\varphi)$. We have an exact sequence
+\[
+0\to K\to A^n\xrightarrow{\varphi} M\to C\to 0.
+\]
+Localizing at $\mathfrak p$ preserves exactness, so
+\[
+0\to K_{\mathfrak p}\to (A^n)_{\mathfrak p}\xrightarrow{\varphi_{\mathfrak p}} M_{\mathfrak p}\to C_{\mathfrak p}\to 0.
+\]
+Since $\varphi_{\mathfrak p}$ is an isomorphism, we get $K_{\mathfrak p}=0$ and $C_{\mathfrak p}=0$.
+
+Now use Proposition~\ref{prop:fg-local-zero} twice:
+\begin{itemize}
+\item $C$ is finitely generated (e.g.\ quotient of $M$), so $C_{\mathfrak p}=0$ implies
+$\exists h\notin\mathfrak p$ with $C_h=0$.
+\item $K$ is finitely generated in the two cases above:
+  - if $A$ is Noetherian, $K\subseteq A^n$ is a submodule of a finitely generated module, hence f.g.;
+  - if $M$ is finitely presented, then by definition $K$ is f.g.
+Thus $K_{\mathfrak p}=0$ implies $\exists g\notin\mathfrak p$ with $K_g=0$.
+\end{itemize}
+Let $f=gh\notin\mathfrak p$. Then $K_f=0$ and $C_f=0$, and localizing the exact sequence at $f$
+gives
+\[
+0\to 0 \to A_f^n\xrightarrow{\varphi_f} M_f\to 0\to 0,
+\]
+so $\varphi_f$ is an isomorphism. Hence $M_f\cong A_f^n$.
+\end{proof}
+
+\begin{remark}[Culture]
+Over a Noetherian ring, for finitely generated modules one has the chain of implications
+\[
+\text{projective} \Longrightarrow \text{locally free} \Longrightarrow \text{flat},
+\]
+and in fact for finitely generated modules over Noetherian rings,
+\[
+M \text{ is projective } \iff M \text{ is locally free } \iff M \text{ is flat}.
+\]
+(Precise hypotheses matter; e.g.\ “flat $\Rightarrow$ projective” needs finite presentation.)
+\end{remark}
+
+
+%===========================================================
+\subsection{Irreducible subsets of Spec A}
+
+\begin{definition}
+Let $X$ be a topological space. A nonempty subset $Y\subseteq X$ is \emph{irreducible} if
+whenever $Y\subseteq Z_1\cup Z_2$ with $Z_1,Z_2$ closed in $X$, then
+$Y\subseteq Z_1$ or $Y\subseteq Z_2$.
+Equivalently, $Y$ (with the subspace topology) cannot be written as the union of two proper closed subsets.
+\end{definition}
+
+\begin{remark}
+$Y$ is irreducible iff $\overline{Y}$ is irreducible.
+Also, if $X$ is Hausdorff, then $X$ is irreducible iff $X$ is a single point
+(because distinct points admit disjoint open neighborhoods).
+\end{remark}
+
+\begin{proposition}\label{prop:V(a)-irreducible}
+Let $\mathfrak a\subseteq A$ be an ideal. The closed set $V(\mathfrak a)\subseteq \Spec A$
+is irreducible iff $\sqrt{\mathfrak a}$ is a prime ideal. In that case,
+\[
+V(\mathfrak a)=V(\sqrt{\mathfrak a})=V(\mathfrak p)
+\quad\text{for }\mathfrak p=\sqrt{\mathfrak a}.
+\]
+Thus the irreducible closed subsets of $\Spec A$ are exactly the sets $V(\mathfrak p)$ for prime $\mathfrak p$.
+\end{proposition}
+
+\begin{proof}
+($\Rightarrow$) Assume $V(\mathfrak a)$ is irreducible. Set $\mathfrak a'=\sqrt{\mathfrak a}$,
+so $V(\mathfrak a)=V(\mathfrak a')$. We show $\mathfrak a'$ is prime.
+
+Suppose $fg\in \mathfrak a'$. Then
+\[
+V(\mathfrak a') \subseteq V(\mathfrak a'+(f)) \cup V(\mathfrak a'+(g)),
+\]
+because a prime containing $\mathfrak a'$ must contain $f$ or $g$ if it contains $fg$.
+By irreducibility, $V(\mathfrak a')\subseteq V(\mathfrak a'+(f))$ or $V(\mathfrak a')\subseteq V(\mathfrak a'+(g))$.
+Say the first holds. Then every prime $\mathfrak p\supseteq \mathfrak a'$ contains $f$.
+Intersecting over all primes containing $\mathfrak a'$ gives
+\[
+f \in \bigcap_{\mathfrak p\supseteq \mathfrak a'} \mathfrak p = \sqrt{\mathfrak a'}=\mathfrak a',
+\]
+since $\mathfrak a'$ is radical. Hence $f\in \mathfrak a'$, proving primeness.
+
+($\Leftarrow$) If $\mathfrak p$ is prime, then $V(\mathfrak p)$ is irreducible:
+if $V(\mathfrak p)\subseteq V(\mathfrak b_1)\cup V(\mathfrak b_2)=V(\mathfrak b_1\mathfrak b_2)$,
+then $\mathfrak b_1\mathfrak b_2\subseteq \mathfrak p$, so by primeness $\mathfrak b_1\subseteq \mathfrak p$
+or $\mathfrak b_2\subseteq \mathfrak p$, hence $V(\mathfrak p)\subseteq V(\mathfrak b_1)$ or $V(\mathfrak b_2)$.
+\end{proof}
+
+\begin{remark}[Generic points]
+For any prime $\mathfrak p$, one has
+\[
+\overline{\{\mathfrak p\}} = V(\mathfrak p).
+\]
+So irreducible closed subsets of $\Spec A$ have a natural “generic point”.
+\end{remark}
+
+\begin{remark}[Components and minimal primes (Noetherian case)]
+In a Noetherian topological space, every closed set is a finite union of irreducible closed subsets.
+In particular, if $A$ is Noetherian then $\Spec A$ has finitely many irreducible components, and they are exactly
+\[
+V(\mathfrak p_1)\cup\cdots\cup V(\mathfrak p_r),
+\]
+where $\mathfrak p_i$ range over the \emph{minimal primes} of $A$.
+Equivalently: every prime ideal contains some minimal prime.
+\end{remark}
+
+\begin{remark}
+If $\mathfrak a\subsetneq A$, then the canonical map induces a homeomorphism
+\[
+V(\mathfrak a)\ \cong\ \Spec(A/\mathfrak a),
+\]
+and the irreducible components of $V(\mathfrak a)$ correspond to primes minimal over $\mathfrak a$.
+\end{remark}
 
 \end{document}
