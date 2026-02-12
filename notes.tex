@@ -98,6 +98,8 @@ breaklines=true
 \newcommand{\Spec}{\operatorname{Spec}}
 \newcommand{\rad}{\operatorname{rad}}
 \newcommand{\maxSpec}{\operatorname{maxSpec}}
+\newcommand{\Supp}{\operatorname{Supp}}
+\newcommand{\Ass}{\operatorname{Ass}}
 
 % \usepackage{mathtools} 
 % \DeclarePairedDelimiter{\angles}{\langle}{\rangle} 
@@ -1857,5 +1859,250 @@ V(\mathfrak a)\ \cong\ \Spec(A/\mathfrak a),
 \]
 and the irreducible components of $V(\mathfrak a)$ correspond to primes minimal over $\mathfrak a$.
 \end{remark}
+
+\textbf{Goal (corrected):}
+If $A$ is Noetherian, then for every ideal $\mathfrak a \subseteq A$ there exist only finitely many
+\emph{minimal primes over $\mathfrak a$}, say $\mathfrak p_1,\dots,\mathfrak p_r$, and
+\[
+V(\mathfrak a)=V(\mathfrak p_1)\cup\cdots\cup V(\mathfrak p_r).
+\]
+In particular (taking $\mathfrak a=(0)$), $A$ has only finitely many \emph{minimal} prime ideals.
+
+This is equivalent to the case $\mathfrak a=(0)$ because
+\[
+V(\mathfrak a)\;=\;\Spec(A/\mathfrak a)
+\]
+and minimal primes over $\mathfrak a$ correspond to minimal primes of $A/\mathfrak a$.
+
+\bigskip
+
+More generally, for an $A$-module $M$ (assume f.g.\ to simplify), the support is
+\[
+\Supp M \;=\;\{\mathfrak p\in\Spec A \mid M_{\mathfrak p}\neq 0\}.
+\]
+If $M$ is finitely generated, then
+\[
+\Supp M = V(\Ann M).
+\]
+(For non-f.g.\ modules this can fail.)
+
+\begin{example}[Support over $\mathbb Z$]
+Over $A=\mathbb Z$ we have $\Spec\mathbb Z=\{(0)\}\cup\{(p)\mid p \text{ prime}\}$.
+
+\begin{itemize}
+\item $M=\mathbb Z \oplus \mathbb Z/45 \oplus \mathbb Z/15$ has $\Supp M=\Spec\mathbb Z$,
+since $(\mathbb Z)_{(p)}\neq 0$ for every prime $(p)$ and also at $(0)$.
+
+\item $M=\mathbb Z/45 \oplus \mathbb Z/15$ has
+\[
+\Supp M = \{(3),(5)\} = V(15),
+\]
+because localizing at $(p)$ kills a torsion module unless $p$ divides the torsion.
+
+\item $M=\bigoplus_{n\ge 2}\mathbb Z/n\mathbb Z$ has
+\[
+\Supp M = \{(p)\mid p \text{ prime}\} = \Spec\mathbb Z\setminus\{(0)\},
+\]
+since for each prime $p$ the summand $\mathbb Z/p\mathbb Z$ survives after localizing at $(p)$,
+while localization at $(0)$ gives $\mathbb Q\otimes_\mathbb Z M=0$ (torsion).
+
+\item $M=\bigoplus_{k\ge 1}\mathbb Z/2^k\mathbb Z$ has $\Supp M=\{(2)\}$.
+\end{itemize}
+\end{example}
+
+A special case: if $M=A/\mathfrak a$, then
+\[
+\Supp(A/\mathfrak a)=V(\mathfrak a).
+\]
+
+\begin{proof}[Algebraic proof of finiteness of minimal primes over $\mathfrak a$]
+We prove: for every $\mathfrak a\subseteq A$ there are finitely many minimal primes over $\mathfrak a$.
+
+Assume not. Consider the set of ``bad'' ideals
+\[
+\mathcal B=\{\mathfrak a\subseteq A \mid \mathfrak a \text{ has infinitely many minimal primes above it}\}.
+\]
+Since $A$ is Noetherian, $\mathcal B$ has a maximal element (w.r.t.\ inclusion); call it $\mathfrak b$.
+
+\emph{Claim: $\mathfrak b$ is not prime.}
+Indeed, if $\mathfrak b$ were prime then it would be the unique minimal prime over itself,
+contradicting that $\mathfrak b\in\mathcal B$.
+
+Thus $\mathfrak b$ is not prime, so there exist $f,g\notin\mathfrak b$ with $fg\in\mathfrak b$.
+
+Now let $\mathfrak p$ be \emph{minimal} over $\mathfrak b$. Then $fg\in\mathfrak p$, hence
+$f\in\mathfrak p$ or $g\in\mathfrak p$. Therefore
+\[
+\mathfrak p \supseteq \mathfrak b+(f)\quad\text{or}\quad \mathfrak p\supseteq \mathfrak b+(g).
+\]
+Since $f,g\notin\mathfrak b$, both $\mathfrak b+(f)$ and $\mathfrak b+(g)$ strictly contain $\mathfrak b$,
+so by maximality of $\mathfrak b$ they are not bad: each has only finitely many minimal primes over it.
+
+Let $\{\mathfrak q_1,\dots,\mathfrak q_s\}$ be the minimal primes over $\mathfrak b+(f)$ and
+$\{\mathfrak q'_1,\dots,\mathfrak q'_t\}$ the minimal primes over $\mathfrak b+(g)$.
+
+\emph{Key point:} if $\mathfrak p$ is minimal over $\mathfrak b$ and $\mathfrak p\supseteq \mathfrak b+(f)$,
+then $\mathfrak p$ is minimal over $\mathfrak b+(f)$ as well:
+if $\mathfrak q\subsetneq \mathfrak p$ were prime with $\mathfrak b+(f)\subseteq\mathfrak q$,
+then $\mathfrak b\subseteq\mathfrak q\subsetneq\mathfrak p$, contradicting minimality of $\mathfrak p$ over $\mathfrak b$.
+Hence $\mathfrak p$ is one of the $\mathfrak q_i$'s; similarly in the $g$-case.
+
+So the set of minimal primes over $\mathfrak b$ is contained in the finite set
+\[
+\{\mathfrak q_1,\dots,\mathfrak q_s,\mathfrak q'_1,\dots,\mathfrak q'_t\},
+\]
+contradiction.
+\end{proof}
+
+\begin{proof}[Geometric proof]
+Let $X=\Spec A$. Since $A$ is Noetherian, the ideals of $A$ satisfy ACC, hence the closed sets $V(\mathfrak a)$
+satisfy DCC (equivalently: $X$ is a Noetherian topological space).
+
+General fact: if $X$ is a topological space satisfying DCC on closed subsets, then every closed subset
+$Y\subseteq X$ is a finite union of irreducible closed subsets.
+
+\textbf{Proof.} Suppose not. Among the closed subsets which are not a finite union of irreducibles, choose a minimal one $Y$.
+Then $Y$ is not irreducible, so $Y=Z_1\cup Z_2$ with $Z_i$ proper closed subsets of $Y$.
+Set $W_i=Y\cap Z_i\subsetneq Y$, so $Y=W_1\cup W_2$ with $W_i$ closed and proper.
+By minimality of $Y$, each $W_i$ is a finite union of irreducibles, hence so is $Y$ --- contradiction.
+\qed
+\end{proof}
+
+Therefore, for $A$ Noetherian and any ideal $\mathfrak a$,
+\[
+V(\mathfrak a)=V(\mathfrak p_1)\cup\cdots\cup V(\mathfrak p_r)
+\]
+where $\mathfrak p_i$ are the minimal primes over $\mathfrak a$.
+Equivalently,
+\[
+\sqrt{\mathfrak a}=\mathfrak p_1\cap\cdots\cap\mathfrak p_r.
+\]
+
+\medskip
+\textbf{But what can we say about $\mathfrak a$ itself?}
+From the minimal primes you recover only $\sqrt{\mathfrak a}$ (i.e.\ the reduced closed set).
+In general $\mathfrak a$ need not equal $\sqrt{\mathfrak a}$, and the extra information is precisely
+the ``nilpotent/thickening'' data. In a Noetherian ring this extra structure is governed by \emph{primary decomposition}:
+one can write
+\[
+\mathfrak a=\mathfrak q_1\cap\cdots\cap\mathfrak q_n
+\]
+with each $\mathfrak q_i$ $\mathfrak p_i$-primary and $\sqrt{\mathfrak q_i}=\mathfrak p_i$.
+The primes $\mathfrak p_i$ are (exactly) the associated primes of $A/\mathfrak a$;
+the minimal primes over $\mathfrak a$ correspond to the \emph{minimal} elements among these associated primes
+(the ``isolated components''), while the rest are \emph{embedded primes}.
+So knowing only the minimal primes is not enough to recover $\mathfrak a$.
+
+\bigskip
+
+Also recall:
+\begin{itemize}
+\item Every element lying in a minimal prime of $A$ is a zero divisor.
+\item The set of zero divisors of $A$ is a union of (not necessarily minimal) primes; in the Noetherian case,
+it is the union of the associated primes of $A$.
+\end{itemize}
+
+\begin{example}
+Let $R=k[x,y]/(x^2,xy)$ and write $\bar x,\bar y$ for the residue classes.
+Note that $(x^2,xy)=x(x,y)$, hence
+\[
+\sqrt{(x^2,xy)}=(x),
+\qquad
+V(x^2,xy)=V(x).
+\]
+So there is only one minimal prime over $(x^2,xy)$, namely $(\bar x)$.
+However there is also an \emph{embedded} prime $(\bar x,\bar y)$ showing up in $\Ass(R)$ (equivalently in $\Ass(R/(0))$).
+
+Annihilators:
+\[
+\Ann_R(\bar x)=(\bar x,\bar y)
+\]
+since $f(\bar x,\bar y)\bar x=0$ iff $fx\in(x^2,xy)=x(x,y)$ iff $f\in(x,y)$.
+Also
+\[
+\Ann_R(\bar y)=(\bar x),
+\]
+since $f\bar y=0$ iff $fy\in (x^2,xy)$, which forces $f\in(x)$.
+The nilradical of $R$ is $(\bar x)$ (since $\bar x^2=0$ and $(\bar x)$ is the intersection of the minimal primes).
+\end{example}
+
+\subsection{Associated primes and primary decomposition}
+\begin{definition}
+Let $M$ be an $A$-module. A prime $\mathfrak p$ is an \emph{associated prime of $M$} if
+$\exists\,0\neq x\in M$ with
+\[
+\Ann_A(x)=\mathfrak p.
+\]
+Equivalently, there exists an injective $A$-linear map
+\[
+A/\mathfrak p \hookrightarrow M,
+\]
+sending $1\mapsto x$.
+\end{definition}
+
+\begin{example}
+For $M=\mathbb Z\oplus \mathbb Z/45\oplus \mathbb Z/15$,
+\[
+\Ass M=\{(0),(3),(5)\}.
+\]
+Indeed $(0)$ comes from the $\mathbb Z$ summand, and $(3),(5)$ come from elements of exact order divisible by $3$ or $5$.
+\end{example}
+
+\begin{example}[Important]
+If $M=A/\mathfrak p$ with $\mathfrak p$ prime, then $\Ass M=\{\mathfrak p\}$,
+since every nonzero element has annihilator $\mathfrak p$.
+Also $\Ass(0)=\varnothing$.
+\end{example}
+
+\begin{proposition}
+If $A$ is Noetherian and $M\neq 0$, then $\Ass M\neq\varnothing$.
+\end{proposition}
+
+\begin{proof}
+Consider the set of annihilators $\{\Ann(x)\mid 0\neq x\in M\}$.
+Since $A$ is Noetherian, there is a maximal element $\Ann(x)$ among them.
+
+We show $\Ann(x)$ is prime. Suppose $fg\in\Ann(x)$ and $g\notin\Ann(x)$.
+Then $gx\neq 0$ and $f(gx)=0$, hence $f\in\Ann(gx)$.
+But $\Ann(x)\subseteq \Ann(gx)$, and by maximality we must have $\Ann(gx)=\Ann(x)$, so $f\in\Ann(x)$.
+Thus $\Ann(x)$ is prime.
+\end{proof}
+
+\begin{remark}
+The same argument shows: if $0\neq z\in M$, then $\Ann(z)$ is contained in some associated prime of $M$.
+\end{remark}
+
+\textbf{Back to general theory.} Let $M$ be an $A$-module.
+
+\begin{proposition}
+\begin{enumerate}
+\item $\Ass M \subseteq \Supp M$.
+\item If $N\subseteq M$, then $\Ass N \subseteq \Ass M$.
+\item If $0\to N\to M\to M/N\to 0$ is exact, then
+\[
+\Ass M \subseteq \Ass N \cup \Ass(M/N).
+\]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}
+\item If $\mathfrak p\in\Ass M$, then $A/\mathfrak p\hookrightarrow M$.
+Localizing at $\mathfrak p$ yields an injection
+\[
+(A/\mathfrak p)_{\mathfrak p}\hookrightarrow M_{\mathfrak p}.
+\]
+But $(A/\mathfrak p)_{\mathfrak p}\neq 0$, hence $M_{\mathfrak p}\neq 0$, so $\mathfrak p\in\Supp M$.
+
+\item If $\mathfrak p=\Ann(x)$ for some $0\neq x\in N$, then also $x\in M$ has the same annihilator, so $\mathfrak p\in\Ass M$.
+
+\item Let $\mathfrak p=\Ann(x)\in\Ass M$. Consider the cyclic submodule $Ax\cong A/\mathfrak p$ and its intersection with $N$.
+
+\textbf{Case 1:} $Ax\cap N=0$. Then $Ax\to M\to M/N$ is injective, so $A/\mathfrak p\hookrightarrow M/N$ and $\mathfrak p\in\Ass(M/N)$.
+
+\textbf{Case 2:} $Ax\cap N\neq 0$. Choose $0\neq y\in Ax\cap N$.
+Since $Ax\cong A/\mathfrak p$, any nonzero element of $Ax$ has annihilator $\mathfrak p$, hence $\Ann(y)=\mathfrak p$ and $\mathfrak p\in\Ass N$.
+\end{enumerate}
+\end{proof}
 
 \end{document}
