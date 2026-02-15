@@ -2026,7 +2026,7 @@ since $f\bar y=0$ iff $fy\in (x^2,xy)$, which forces $f\in(x)$.
 The nilradical of $R$ is $(\bar x)$ (since $\bar x^2=0$ and $(\bar x)$ is the intersection of the minimal primes).
 \end{example}
 
-\subsection{Associated primes and primary decomposition}
+\subsection{Associated primes}
 \begin{definition}
 Let $M$ be an $A$-module. A prime $\mathfrak p$ is an \emph{associated prime of $M$} if
 $\exists\,0\neq x\in M$ with
@@ -2103,6 +2103,241 @@ But $(A/\mathfrak p)_{\mathfrak p}\neq 0$, hence $M_{\mathfrak p}\neq 0$, so $\m
 \textbf{Case 2:} $Ax\cap N\neq 0$. Choose $0\neq y\in Ax\cap N$.
 Since $Ax\cong A/\mathfrak p$, any nonzero element of $Ax$ has annihilator $\mathfrak p$, hence $\Ann(y)=\mathfrak p$ and $\mathfrak p\in\Ass N$.
 \end{enumerate}
+\end{proof}
+
+\subsection*{Associated primes (Noetherian case)}
+
+Throughout, let $A$ be Noetherian and $M$ a finitely generated $A$-module.
+
+\begin{enumerate}
+    \item $\Ass_A(M)$ is finite.
+    \item If $\mathfrak{P}$ is minimal over $\Ann_A(M)$, then $\mathfrak{P}\in \Ass_A(M)$.
+\end{enumerate}
+
+Recall:
+\[
+\Ass(M)\subseteq \Supp(M)=V(\Ann M).
+\]
+If $\mathfrak{p}_1,\dots,\mathfrak{p}_r$ are the primes minimal over $\Ann M$, then
+\[
+V(\Ann M)=\bigcup_{i=1}^r V(\mathfrak{p}_i),
+\qquad
+\sqrt{\Ann M}=\bigcap_{i=1}^r \mathfrak{p}_i.
+\]
+Also, for every $\mathfrak{p}\in \Ass(M)$ we have $\Ann M\subseteq \mathfrak{p}$, hence
+$\sqrt{\Ann M}\subseteq \mathfrak{p}$. Therefore
+\[
+\sqrt{\Ann M}\subseteq \bigcap_{\mathfrak{p}\in \Ass(M)}\mathfrak{p}
+\subseteq \bigcap_{i=1}^r \mathfrak{p}_i=\sqrt{\Ann M},
+\]
+so
+\[
+\boxed{\ \sqrt{\Ann M}=\bigcap_{\mathfrak{p}\in \Ass(M)}\mathfrak{p}\ }.
+\]
+
+%------------------------------------------------------------
+
+\subsection*{Prime filtration and finiteness of $\Ass(M)$}
+
+\begin{proposition}[Prime filtration with associated primes]
+There exists a finite chain of submodules
+\[
+0=M_0\subsetneq M_1\subsetneq \cdots \subsetneq M_n=M
+\]
+such that for each $i$,
+\[
+M_i/M_{i-1}\cong A/\mathfrak{p}_i
+\quad\text{for some }\mathfrak{p}_i\in \Ass(M/M_{i-1}).
+\]
+In particular each $\mathfrak{p}_i$ is a prime ideal (and an associated prime of the corresponding quotient).
+\end{proposition}
+
+\begin{proof}
+Assume $M_{i-1}\neq M$. Since $M/M_{i-1}$ is a nonzero finitely generated module over a Noetherian ring,
+$\Ass(M/M_{i-1})\neq \varnothing$. Choose $\mathfrak{p}_i\in \Ass(M/M_{i-1})$, so
+$\mathfrak{p}_i=\Ann(\overline{x_i})$ for some $\overline{x_i}\in M/M_{i-1}$.
+Let $M_i:=M_{i-1}+Ax_i$. Then $M_i/M_{i-1}=A\overline{x_i}\cong A/\mathfrak{p}_i$.
+This strictly increases the chain. Since $M$ is Noetherian, the process terminates.
+\end{proof}
+
+\begin{corollary}[Finiteness of $\Ass(M)$]
+$\Ass(M)$ is finite.
+\end{corollary}
+
+\begin{proof}
+Using the short exact sequences
+\[
+0\to M_{i-1}\to M_i\to M_i/M_{i-1}\to 0,
+\]
+we have the standard containment
+\[
+\Ass(M_i)\subseteq \Ass(M_{i-1})\cup \Ass(M_i/M_{i-1})
+=\Ass(M_{i-1})\cup\{\mathfrak{p}_i\}.
+\]
+Inducting gives $\Ass(M)\subseteq \{\mathfrak{p}_1,\dots,\mathfrak{p}_n\}$, hence finite.
+\end{proof}
+
+%------------------------------------------------------------
+
+\subsection*{Behavior under localization}
+
+Let $S\subset A$ be multiplicatively closed. Then $A_S$ is Noetherian and $M_S$ is a finitely generated $A_S$-module.
+
+\begin{proposition}[Associated primes and localization]
+\[
+\Ass_{A_S}(M_S)=\{\ \mathfrak{p}A_S \mid \mathfrak{p}\in \Ass_A(M),\ \mathfrak{p}\cap S=\varnothing\ \}.
+\]
+Equivalently, via contraction from $A_S$ to $A$,
+\[
+\Ass_{A_S}(M_S)\ \longleftrightarrow\ \{\mathfrak{p}\in \Ass_A(M)\mid \mathfrak{p}\cap S=\varnothing\}.
+\]
+\end{proposition}
+
+\begin{proof}
+($\supseteq$) If $\mathfrak{p}=\Ann_A(x)$ with $\mathfrak{p}\cap S=\varnothing$, then in $M_S$,
+\[
+\Ann_{A_S}(x/1)=\mathfrak{p}A_S.
+\]
+Indeed, $a/s\in \Ann_{A_S}(x/1)$ iff $(a/s)(x/1)=0$ in $M_S$, i.e.\ $\exists t\in S$ with $tax=0$ in $M$,
+so $ta\in \Ann_A(x)=\mathfrak{p}$. Since $\mathfrak{p}$ is prime and disjoint from $S$, this forces $a\in \mathfrak{p}$.
+
+($\subseteq$) Let $\mathfrak{q}\in \Ass_{A_S}(M_S)$. Then $\mathfrak{q}=\Ann_{A_S}(x/s)$ for some $x/s\in M_S$,
+and $\mathfrak{q}=\mathfrak{p}A_S$ where $\mathfrak{p}=\mathfrak{q}^c\subset A$ is prime with $\mathfrak{p}\cap S=\varnothing$.
+Set $N:=\{m\in M\mid m/1=0\text{ in }M_S\}$, so $M_S\cong (M/N)_S$ and $x/s$ comes from some $\overline{x}\in M/N$.
+Then $\mathfrak{p}$ is the contraction of $\Ann_{A_S}(\overline{x}/1)$, and a standard clearing-denominators argument
+produces $\overline{y}\in M/N$ with $\Ann_A(\overline{y})=\mathfrak{p}$; hence $\mathfrak{p}\in \Ass_A(M/N)\subseteq \Ass_A(M)$.
+Therefore $\mathfrak{q}=\mathfrak{p}A_S$ with $\mathfrak{p}\in \Ass_A(M)$ and $\mathfrak{p}\cap S=\varnothing$.
+\end{proof}
+
+\noindent\textbf{Special case: localization at a prime.}
+For $\mathfrak{P}\in \Spec A$, taking $S=A\setminus \mathfrak{P}$ yields
+\[
+\Ass_{A_\mathfrak{P}}(M_\mathfrak{P})=\{\ \mathfrak{p}A_\mathfrak{P}\mid \mathfrak{p}\in \Ass_A(M),\ \mathfrak{p}\subseteq \mathfrak{P}\ \}.
+\]
+Equivalently (contracting back to $A$),
+\[
+\Ass_{A_\mathfrak{P}}(M_\mathfrak{P}) \leftrightarrow \{\mathfrak{p}\in \Ass_A(M)\mid \mathfrak{p}\subseteq \mathfrak{P}\}.
+\]
+
+%------------------------------------------------------------
+
+\subsection*{Minimal primes over $\Ann(M)$ are associated}
+
+\begin{proposition}
+If $\mathfrak{P}$ is minimal over $\Ann(M)$, then $\mathfrak{P}\in \Ass(M)$.
+\end{proposition}
+
+\begin{proof}
+Localize at $\mathfrak{P}$. Since $\Ann(M)\subseteq \mathfrak{P}$, we have $M_\mathfrak{P}\neq 0$.
+Moreover,
+\[
+\Supp_{A_\mathfrak{P}}(M_\mathfrak{P})
+=\{\ \mathfrak{q}A_\mathfrak{P}\mid \mathfrak{q}\in \Supp_A(M),\ \mathfrak{q}\subseteq \mathfrak{P}\ \}.
+\]
+But $\Supp_A(M)=V(\Ann M)$, and minimality of $\mathfrak{P}$ over $\Ann M$ implies the only prime
+in $V(\Ann M)$ contained in $\mathfrak{P}$ is $\mathfrak{P}$ itself. Hence
+\[
+\Supp_{A_\mathfrak{P}}(M_\mathfrak{P})=\{\mathfrak{P}A_\mathfrak{P}\}.
+\]
+Since $\Ass(M_\mathfrak{P})\subseteq \Supp(M_\mathfrak{P})$ and $\Ass(M_\mathfrak{P})\neq \varnothing$
+(for a nonzero finitely generated module over a Noetherian ring), we get
+\[
+\Ass_{A_\mathfrak{P}}(M_\mathfrak{P})=\{\mathfrak{P}A_\mathfrak{P}\}.
+\]
+By the localization formula above, this forces $\mathfrak{P}\in \Ass_A(M)$.
+\end{proof}
+
+%------------------------------------------------------------
+
+\subsection*{Zero divisors and prime avoidance}
+
+\begin{proposition}
+Let $M\neq 0$ be finitely generated over Noetherian $A$, and let $\mathfrak{a}\subset A$ be an ideal.
+Then either:
+\begin{enumerate}
+    \item there exists $a\in \mathfrak{a}$ such that $\mu_a:M\to M$ is injective; or
+    \item there exists $0\neq x\in M$ such that $\mathfrak{a}\subseteq \Ann(x)$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+In the Noetherian, finitely generated setting, the set of zero divisors on $M$ equals
+\[
+\mathrm{ZD}(M)=\bigcup_{\mathfrak{p}\in \Ass(M)} \mathfrak{p}.
+\]
+If no $a\in \mathfrak{a}$ acts injectively, then every $a\in \mathfrak{a}$ is a zero divisor on $M$,
+so $\mathfrak{a}\subseteq \bigcup_{\mathfrak{p}\in \Ass(M)}\mathfrak{p}$.
+Since $\Ass(M)$ is finite, prime avoidance gives $\mathfrak{a}\subseteq \mathfrak{p}$ for some $\mathfrak{p}\in \Ass(M)$.
+Write $\mathfrak{p}=\Ann(x)$ for some $0\neq x\in M$, giving (2).
+\end{proof}
+
+\begin{remark}
+Combining this with the earlier discussion yields again
+\[
+\sqrt{\Ann M}=\bigcap_{\mathfrak{p}\in \Ass(M)}\mathfrak{p}.
+\]
+\end{remark}
+
+%------------------------------------------------------------
+
+\subsection{Primary decomposition}
+For simplicity we consider $A$ Noetherian and $M$ finitely generated. 
+
+\textbf{Motivation (ideals).} Classically, for an ideal $\mathfrak{a}\subset A$ (Noetherian),
+\[
+\mathfrak{a}=\mathfrak{q}_1\cap \cdots \cap \mathfrak{q}_r
+\]
+with each $\mathfrak{q}_i$ primary. If $\mathfrak{q}$ is primary, then $\sqrt{\mathfrak{q}}$ is prime,
+and one has
+\[
+\Ass(A/\mathfrak{a})=\{\sqrt{\mathfrak{q}_1},\dots,\sqrt{\mathfrak{q}_r}\}
+\]
+(after choosing a suitable minimal decomposition).
+
+\begin{definition}
+Let $N\subsetneq M$. We say $N$ is \emph{$\mathfrak{p}$-primary} (as a submodule of $M$) if
+\[
+\Ass(M/N)=\{\mathfrak{p}\}.
+\]
+\end{definition}
+
+\begin{proposition}
+If $N$ is $\mathfrak{p}$-primary, then
+\[
+\sqrt{\Ann(M/N)}=\mathfrak{p}.
+\]
+Equivalently, $a\in \mathfrak{p}$ iff multiplication by $a$ on $M/N$ is nilpotent.
+\end{proposition}
+
+\begin{proof}
+In general, $\sqrt{\Ann(M/N)}$ is the intersection of the primes minimal over $\Ann(M/N)$, and those minimal primes
+are contained in $\Ass(M/N)$. If $\Ass(M/N)=\{\mathfrak{p}\}$, then the only minimal prime is $\mathfrak{p}$,
+so $\sqrt{\Ann(M/N)}=\mathfrak{p}$. The nilpotence statement is the definition of radical: $a\in \sqrt{\Ann(M/N)}$
+iff $a^n\in \Ann(M/N)$ for some $n$, i.e.\ $\mu_a^n=0$ on $M/N$.
+\end{proof}
+
+\begin{proposition}[Useful characterization]
+For $N\subsetneq M$, the following are equivalent:
+\begin{enumerate}
+    \item $N$ is $\mathfrak{p}$-primary.
+    \item Every zero divisor on $M/N$ lies in $\sqrt{\Ann(M/N)}$ (equivalently, every zero divisor acts nilpotently on $M/N$).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+$(1)\Rightarrow(2)$ If $\Ass(M/N)=\{\mathfrak{p}\}$, then the set of zero divisors on $M/N$ is
+$\bigcup_{\mathfrak{q}\in \Ass(M/N)}\mathfrak{q}=\mathfrak{p}=\sqrt{\Ann(M/N)}$.
+
+$(2)\Rightarrow(1)$ Write $\Ass(M/N)=\{\mathfrak{q}_1,\dots,\mathfrak{q}_t\}$ (finite).
+Then the set of zero divisors on $M/N$ is $\bigcup_{j=1}^t \mathfrak{q}_j$, so by assumption
+\[
+\bigcup_{j=1}^t \mathfrak{q}_j \subseteq \sqrt{\Ann(M/N)}.
+\]
+But $\sqrt{\Ann(M/N)}=\bigcap_{\mathfrak{r}\ \text{minimal over }\Ann(M/N)}\mathfrak{r}$ and every minimal prime over
+$\Ann(M/N)$ lies in $\Ass(M/N)$. If there were two distinct minimal primes among the $\mathfrak{q}_j$'s, their union
+cannot be contained in their intersection (prime avoidance / basic set-theoretic obstruction), contradicting the inclusion above.
+Hence there is a unique minimal prime, call it $\mathfrak{p}$, and then all associated primes must equal $\mathfrak{p}$,
+so $\Ass(M/N)=\{\mathfrak{p}\}$.
 \end{proof}
 
 \end{document}
