@@ -2320,7 +2320,7 @@ iff $a^n\in \Ann(M/N)$ for some $n$, i.e.\ $\mu_a^n=0$ on $M/N$.
 For $N\subsetneq M$, the following are equivalent:
 \begin{enumerate}
     \item $N$ is $\mathfrak{p}$-primary.
-    \item Every zero divisor on $M/N$ lies in $\sqrt{\Ann(M/N)}$ (equivalently, every zero divisor acts nilpotently on $M/N$).
+    \item Every zero divisor on $M/N$ lies in $\sqrt{\Ann(M/N)} = \set{\mathfrak{p}}$ (equivalently, every zero divisor acts nilpotently on $M/N$).
 \end{enumerate}
 \end{proposition}
 
@@ -2338,6 +2338,497 @@ $\Ann(M/N)$ lies in $\Ass(M/N)$. If there were two distinct minimal primes among
 cannot be contained in their intersection (prime avoidance / basic set-theoretic obstruction), contradicting the inclusion above.
 Hence there is a unique minimal prime, call it $\mathfrak{p}$, and then all associated primes must equal $\mathfrak{p}$,
 so $\Ass(M/N)=\{\mathfrak{p}\}$.
+\end{proof}
+
+\textbf{Goal.} We want to show that every $M' \subset M$ is an intersection of finitely many primary submodules. 
+$$M' = N_1 \cap \cdots \cap N_r$$
+Where each $N_i$ is $\mathfrak{p}_i$-primary, then $\mathfrak{p}_i$ are distinct, and 
+$$\Ass (M/M') = \set{\mathfrak{p}_1, \cdots, \mathfrak{p}_r}$$
+Note that it is enough to show for $M' = 0$, work with $M/M'$ in general.
+
+\begin{remark}
+    For $\mathfrak{p}_i$ minimal, $N_i = \ker (M \to (M/M')_{\mathfrak{p}_i})$ is unique.
+\end{remark}
+
+The proof is in stages: 
+\textbf{$M'$ is an intersection of some finite collection of primary submodules.} (This is analogous to 
+if $A$ is a field, and $M$ is a finite dimensional vector space then $M'$ is the $\bigcap$ of finitely many hyperplanes).  
+
+\begin{definition}
+    Let $N \subset M$ we say that $N$ is an "old fashioned irreducible submodule $M \subset N$" (ofi), iff 
+    $$N \subsetneq M, \quad N \subsetneq N_1, N_2 \implies N \subsetneq N_1 \cap N_2$$
+\end{definition}
+
+\begin{proposition}
+    $N \subset M$ is ofi $\implies$ $N$ is primary.
+\end{proposition}
+
+\begin{proof}
+    Suppose that $N \subsetneq M$ so $M / N \ne \varnothing$ so $\Ass (M/N) \ne \varnothing$. Suppose that we had two distinct associated primes 
+    $\mathfrak{p}_1, \mathfrak{p}_2 \in \Ass (M/N)$. Then $\exists [x_1],[ x_2] \in M/N$ s.t 
+    $$\mathfrak{p}_1 = \Ann(x_1), \quad \mathfrak{p}_2 = \Ann(x_2)$$
+    in particular, $[x_1], [x_2] \ne 0$ so 
+    $$N + \angles{x_1}, N + \angles{x_2} \supsetneq N$$
+    But Note that 
+    $$ N + \angles{x_1} \cap  N + \angles{x_2} = N \quad \text{contradiction}$$
+    This is because in $M /N$ we have that 
+    $$\angles{[x_1]} \cap \angles{[x_2]} = 0$$
+    but every nonzero element in $\angles{x_1}, \ \angles{x_2}$ is annhilated by $\mathfrak{p}_1, \ \mathfrak{p}_2$ respectively. 
+    So their intersection must be $\set{[0]}$.
+\end{proof}
+
+\begin{proposition}
+    Given $M \supsetneq N$ then $M'$ is an intersection of finitely many ofi submodules. (So $M'$ is an intersection of finitely many primary submodules). 
+\end{proposition}
+
+\begin{proof}
+    Suppose that there is a proper submodule that isn't a finite intersection of ofi submodules, then there is a largest such 
+    $$M' \subsetneq M \quad \text{ not a finite intersection of ofi, therefore not ofi}$$
+    So $\exists N_1, N_2$ with $M' \subsetneq N_1, N_2 \subset M$ with 
+    $$N_1 \cap N_2 = M'$$
+    by maximality of $N_1, \ N_2$ is an intersection of ofi's, we are done. 
+\end{proof}
+
+At this stage, $M' = \text{ a finite intersection of primary submodules}$; but the relevant primes might not be distinct and might include more than 
+the associated primes of $M/M'$. However, it doesn't hurt to pretend $M' = 0$.
+
+\begin{proposition}
+    Suppose that $N_1, N_2 \subset M$ are $\mathfrak{p}$-primary, then $N_1 \cap N_2$ is $\mathfrak{p}$-primary.
+\end{proposition}
+
+\begin{proof}
+    $$M/(N_1 \cap N_2) \hookrightarrow M_1 / N_1 \oplus M / N_2$$
+    $$x \to (x+N_1, x + N_2)$$
+    Therefore 
+    $$\Ass M/(N_1 \cap N_2) \subseteq \Ass M_1 / N_1 \oplus M / N_2 = \Ass (M/N_1) \cup \Ass(M/N_2) = \set{\mathfrak{p}} \cup \set{\mathfrak{p}}$$
+    Where the last equality if from 
+    $$0 \to M / N_1 \to  \oplus M / N_1 \oplus M / N_2 \to M / N_2 \to 0$$
+    and the other direction 
+    $$M / N_1 \hookrightarrow M/N_1 \oplus M/N_2$$
+\end{proof}
+
+Therefore at this step, 
+$$M' = N_1 \cap \cdots \cap N_r \quad N_i \text{ is } \mathfrak{p}_i \text{ primary}$$
+and all $\mathfrak{p}_i$ are distinct. 
+
+\begin{remark}
+    $\Ass (M/M') \subseteq \set{\mathfrak{p}_1, \cdots, \mathfrak{p}_r}$ because 
+    $$M/M' \hookrightarrow M/N_1 \oplus \cdots \oplus M/N_r$$
+    uses $M' = N_1 \cap \cdots \cap N_r$.
+\end{remark}
+
+Now, if any $N_i$ is not need, throw it out. i.e 
+$$M' = N_1 \cap \cdots \cap N_{i-1} \cap N_{i+1} \cap \cdots \cap N_r$$
+so at the end of this finite process, we end up with 
+$$M' = N_1' \cap \cdots \cap N_s'$$
+an irredundant (minimal) intersection of primary submodules, with distinct $\mathfrak{p}_i'$s. 
+(Note that we have that $\Ass M/M' \subseteq \set{\mathfrak{p}_i}$ by the same argument as above). 
+In particular 
+$$M' \subsetneq (N_1' \cap \cdots N_{i-1}' \cap N_{i+1} \cap \cdots N_s)$$
+Now let us show that these $\mathfrak{p}_i'$'s are all associated to $M/M'$. 
+
+For notational convenience, let us show that $\mathfrak{p}_1' \in \Ass M/M'$, so 
+$$M' \subsetneq N_2' \cap \cdots \cap N_s' = Z$$
+at this point, we pass to $M/M'$ and $M' = 0$ for ease of notation. Therefore 
+$$0 = N_1' \cap Z, \quad N_1' \text{ is $\mathfrak{p}_1'$ primary and $Z \ne 0$}$$
+Therefore 
+$$Z \to M/N_1' \quad \text{ is an injection}$$
+But since $Z \ne 0$ we have that 
+$$\varnothing \ne \Ass Z \subset \Ass M/N_1' = \set{\mathfrak{p}_1}$$
+We conclude that 
+$$\Ass Z = \set{\mathfrak{p}_1'}$$
+But $\Ass Z \subseteq \Ass M$ so $\mathfrak{p}_1' \in \Ass M$ as desired.
+
+\begin{remark}
+    Note that $\exists A$'s with $\mathfrak{p}$ primes such that $\mathfrak{p}^2$ is not itself $\mathfrak{p}$ primary.
+
+    The correct thing to do is the symbolic $n$'th power 
+    $$\mathrlap{p}^{(n)} = \set{a \in A \mid \exists s \not\in \mathfrak{p} \text{ with } sa \in \mathfrak{p}^n} = (\mathfrak{p}^{(n)})^{ec}$$
+    For 
+    $$A \to A_\mathfrak{p}$$
+\end{remark}
+
+\section{Integral extensions.} 
+\textbf{Reminder.} If $k, L$ are fields, with $k \subset L$ and element $x \in L$ is algebraic over $K$ iff 
+$\exists$ nonzero polynomial $c_n x^n + \cdots+ c_1 x + c_0 = 0$ with $c_0, \cdots, c_n \in K$ (wlog $c_n = 0$, even $c_n = 1$). 
+
+\begin{definition}
+    let $A$ be a subring of $B$ (in particular $1_A = 1_B$) (Not necc domains). An element $b \in B$ is called integral over $A$, 
+    if $\exists$ monic polynomial in $f(x) \in A[x]$ 
+    $$x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0$$
+    s.t 
+    $$f(b) = 0$$
+\end{definition}
+
+\begin{remark}
+    if $A \xrightarrow{\varphi} B$ we say that $\varphi$ is integral (or an integral extension), iff every element of $B$ is 
+    integral over $\operatorname{Im} \varphi \subseteq B$, note that 
+    $\varphi$ need not be injective.
+\end{remark}
+
+\begin{theorem}
+    Let $A \subset B$ and let $b \in B$. The following are equivalent:
+    \begin{enumerate}
+        \item $b$ is integral over $A$.
+        
+        \item The sub-$A$-algebra $A[b] \subset B$ is a finitely generated
+        $A$-module. Recall that
+        \[
+        A[b] = \operatorname{Im}\!\big(A[x] \to B,\; g(x)\mapsto g(b)\big),
+        \]
+        i.e. the smallest subring of $B$ containing $A$ and $b$.
+        
+        \item There exists an intermediate subring
+        \[
+        A[b] \subseteq C \subseteq B
+        \]
+        such that $C$ is a finitely generated $A$-module.
+        
+        \item There exists an $A[b]$-module $M$ which is finitely generated
+        as an $A$-module and satisfies
+        \[
+        \Ann_{A[b]}(M)=0,
+        \]
+        i.e. $M$ is a faithful $A[b]$-module.
+        
+        \item Whenever $A \subset B \subset R$, there exists a finitely
+        generated $A$-module $M \subset R$ such that
+        \[
+        bM \subseteq M,
+        \]
+        i.e. $M$ is an $A[b]$-submodule of $R$, and $M$ is faithful as an
+        $A[b]$-module (in practice this holds for instance if $1\in M$ or if
+        $R$ is a domain).
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\begin{itemize}
+
+\item[$(1)\Rightarrow(2)$]
+Suppose $b$ satisfies a monic polynomial
+\[
+b^n + a_{n-1}b^{n-1} + \cdots + a_0 = 0,
+\qquad a_i \in A.
+\]
+Then every power $b^m$ with $m\ge n$ can be written as an $A$-linear
+combination of $1,b,\dots,b^{n-1}$. Equivalently, if
+$f(x)=x^n+a_{n-1}x^{n-1}+\cdots+a_0$, then for every $g(x)\in A[x]$
+we can perform Euclidean division:
+\[
+g(x)=f(x)q(x)+r(x), \qquad \deg r < n.
+\]
+Evaluating at $b$ gives
+\[
+g(b)=r(b),
+\]
+so $A[b]$ is generated as an $A$-module by
+\[
+1,b,\dots,b^{n-1}.
+\]
+
+\item[$(2)\Rightarrow(3)$]
+Immediate by taking $C=A[b]$.
+
+\item[$(3)\Rightarrow(4)$]
+Take $M=C$. Then $M$ is finitely generated as an $A$-module by
+assumption. Faithfulness holds since $1\in C$: if
+$c\in A[b]$ annihilates $C$, then in particular $c\cdot 1=0$, hence
+$c=0$.
+
+\item[$(4)\Rightarrow(1)$] (Determinant trick.)
+Let $M=\langle m_1,\dots,m_k\rangle_A$. Since $M$ is an $A[b]$-module,
+multiplication by $b$ sends generators to $A$-linear combinations:
+\begin{align*}
+b m_1 &= a_{11}m_1 + \cdots + a_{1k}m_k, \\
+&\vdots \\
+b m_k &= a_{k1}m_1 + \cdots + a_{kk}m_k,
+\end{align*}
+with $a_{ij}\in A$. Writing this in matrix form,
+\[
+(bI - Q)
+\begin{pmatrix}
+m_1\\ \vdots\\ m_k
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\\ \vdots\\ 0
+\end{pmatrix},
+\]
+where $Q=(a_{ij})\in M_k(A)$. Multiply by the classical adjoint of
+$(bI-Q)$ to obtain
+\[
+\det(bI-Q)\,
+\begin{pmatrix}
+m_1\\ \vdots\\ m_k
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\\ \vdots\\ 0
+\end{pmatrix}.
+\]
+The element $\det(bI-Q)$ is a monic polynomial in $b$ with
+coefficients in $A$. It annihilates all generators of $M$, hence
+annihilates $M$. By faithfulness,
+\[
+\det(bI-Q)=0,
+\]
+so $b$ satisfies a monic polynomial over $A$ and is integral over $A$.
+
+\end{itemize}
+\end{proof}
+
+\begin{example}
+    Let $A = \Z \subset \Q(\sqrt{5})$, and consider the element
+    \[
+    \alpha = \frac{1 + \sqrt{5}}{2}.
+    \]
+    Note that if $a,b \in \Z$, then $a + b\sqrt{5}$ is integral over $\Z$
+    (indeed $\sqrt{5}$ satisfies the monic polynomial $x^2 - 5 = 0$).
+    
+    Let
+    \[
+    M = 2\Z + (1 + \sqrt{5})\Z \subset \Q(\sqrt{5}),
+    \]
+    so $M$ is finitely generated as a $\Z$-module. We claim that
+    \[
+    \alpha M \subseteq M.
+    \]
+    Indeed,
+    \[
+    \frac{1+\sqrt{5}}{2} \cdot 2 = 1 + \sqrt{5}, 
+    \qquad
+    \frac{1 + \sqrt{5}}{2} \cdot (1 + \sqrt{5})
+    = 3 + \sqrt{5}
+    = 2 + (1 + \sqrt{5}),
+    \]
+    hence $\alpha M \subseteq M$. Therefore
+    $\frac{1 + \sqrt{5}}{2}$ is integral over $\Z$.
+\end{example}
+
+\textbf{Easy fact.} $\Z[\frac{1 + \sqrt{5}}{2}] = \set{\frac{a + b \sqrt{5}}{2} \mid a, b \in \Z \ a \equiv b \pmod 2}$ is the 
+set of all elements of $\Q(\sqrt{5})$ which are integral over $\Z$. (it's the integral closure over $\Z$). 
+
+\textbf{Reminder.} We know that $A \subset B$, $b \in B$ integral over $A$ (say with $b^n + a_{n-1} b^{n-1} \cdots + a_0$), then $A[b]$ is generated over $A$ by 
+$1, b, b^2, \cdots, b^{n-1}$. (Note that $\ker A[x] \to B, \ x \to b$ contains monic polynomial but it need not consist of multiples of a single monic polynomial). 
+
+\textbf{Slight generalization.} 
+\begin{proposition}
+    Say $A \subseteq B$ and $b_1, \cdots, b_r \in B$ are all integral over $A$ 
+    then $A \subset A[b_1, \cdots, b_r] \subset B$ and 
+    $A[b_1, \cdots, b_r]$ is f.g as an $A$-module.  
+\end{proposition}
+
+\begin{remark}
+    Note that it is enough to have the weaker assumption $b_1$ integral over $A$, $b_2$ integral over $A[b_1]$, $b_3$ is integral over $A[b_1,b_2]$ etc..
+\end{remark}
+
+\begin{proof}
+    Indeed 
+    $$A[b_1] = A + A b_1 + \cdots + A b_1^{n-1}$$
+    and 
+    $$A[b_1, b_2] = (A[b_1]) [b_2] = (A[b_1]) + (A[b_1]) b_2 + \cdots + (A[b_1])b^{m-1}$$
+    finitely generated over $A$ by $\set{b_ib_j}_{\substack{0 \le j \le n-1 \\ 0 \le j \le m-1}}$ this patter continues. 
+\end{proof}
+
+\begin{proposition}
+    If $b_1, \cdots, b_r$ are all integral over $A$ then the map 
+    $$A \to A[b_1, \cdots, b_r] \text{ is integral!}$$
+    i.e we get that $\forall \gamma \in A[b_1, \cdots, b_r]$ are also integral over $A$. 
+\end{proposition}
+
+\begin{proof}
+    $\gamma (A[b_1, \cdots, b_r]) \subseteq A[b_1, \cdots, b_r]$. 
+\end{proof}
+
+\textbf{Interpretation.} Let $A \xrightarrow{f} B$ be any ring homomorphism, then $B$ becomes a finite $A$-module iff 
+\begin{enumerate}
+    \item $f$ is of finite type, $B$ is a finitely generated $A$-algebra ($= A[b_1, \cdots, b_r]$). 
+    \item $f$ is integral.
+\end{enumerate}
+In this case we say that $f$ is a "finite ring homomorphism". 
+
+\begin{definition}
+    If $A \subseteq B$ a subring, then the set $C$ of elements of $B$ that are integral over $A$ is the 
+    integral closure of $A$ in $B$; hence 
+    $$A \subseteq C \subseteq B$$
+    
+    If $A \xrightarrow{f} B$ and $f$ not injective, then $C$ is the integral closure of $f(A)$ in $B$. 
+\end{definition}
+
+\begin{theorem}
+    $C$ is a subring of $B$.
+\end{theorem}
+
+\begin{proof}
+    If $c_1, c_2 \in C$ then $A[c_1, c_2]$ is a finitely generated $A$-module, so all elements are 
+    integral over $A$, hence $c_1 + c_2, \ c_1 - c_, c_1 c_2 \in C$. 
+\end{proof}
+
+\begin{definition}
+    If $A$ is a domain, with field of fractions $K$, we say that $A$ is integral closed iff 
+    the integral closure of $A$ in $K$ is $A$. 
+\end{definition}
+
+\begin{proposition}
+    Every UFD is integrally closed. 
+\end{proposition}
+
+\begin{proof}
+    (Pretend that $A = \Z$), suppose $\alpha = \frac{a}{b} \in \Q$ is integral over $\Z$. We can assume that 
+    this fraction is in lowest terms, i.e every reducible $p$ with $p \mid b$ satisfies $p \not\mid a$. 
+    Our goal is to show that $\forall p$ we have $p \not\mid b$. We have an equation 
+    $$\alpha^n + c_{n-1} \alpha^{n-1} + \cdots + c_1 \alpha + c_0 = 0 \quad c_i \in \Z$$
+    so 
+    $$(a/b)^n + c_{n-1} (a/b)^{n-1} + c_1 (a/b) + c_0 = 0$$
+    multiplying by $b^n$ we get 
+    $$a^n + c_{n-1} a^{n-1} b + \cdots + c_1 ab^{n-1} + c_0 b^n = 0$$
+    if $p \mid b$ then $p$ divides all the later terms. So $p \mid a^n$, therefore (by UFD) we have 
+    $p \mid a$ contradiction. 
+\end{proof}
+
+\begin{proposition}
+    if $A \to B$ and $B \to c$ are integral homomorphisms, then $A \xrightarrow{gf} C$ is also integral. 
+\end{proposition}
+
+\begin{proof}
+    (it doesn't hurt pretend $A \subset B \subset C$) let $c \in C$ we want to show that $c$ is integral over $A$. We know that 
+    $c$ is integral over $B$ therefore $c$ satisfies some equation 
+    $$c^n + b_{n-1} c^{n-1} + \cdots + b_1 c + b_0 = 0$$
+    let $B_0 = A[b_0, \cdots, b_{n-1}]$, then $B_0$ is a finitely generated $A$-algebra. On the other hand, the $b_i$'s are integral over $A$. 
+    so $B_0$ is a finitely generated $A$-module, and 
+    $B_0[C]$ is a finitely generated $B_0$ module. Then $B_0[C] = A[b_0, \cdots, b_{n-1}, c]$ is a finitely generated $A$ module. 
+    Therefore $C$ is integral over $A$.  
+\end{proof}
+
+\begin{proposition}
+    If $A \xrightarrow{f} B$ is integral and $\mathfrak{b} \subseteq B$ is an ideal and $\mathfrak{a} \subseteq A$ is 
+    an ideal with $\mathfrak{a} \subseteq \mathfrak{b}^c$ then $f$ induces a ring homomorphism. 
+    $$A / \mathfrak{a} \xrightarrow{\overline{f}} B / \mathfrak{b}$$
+    then $\overline{f}$ is also integral.
+\end{proposition}
+
+\begin{proof}
+    Trivial, take $\overline{b} \in B / \mathfrak{b}$ and take some representative $b$. Find an equation for $b$ with coefficients in $A$ and reduce 
+    mod $\mathfrak{b}$ resp to $\mathfrak{a}$. 
+
+    Note that $\overline{f}$ is injective iff $a = \mathfrak{b}^c$
+\end{proof}
+
+\begin{proposition}
+    Suppose that $A \xrightarrow{f} B$ integral, and $S \subset A$ is multiplicatively closed. Then 
+    $S^{-1}A \xrightarrow{S^{-1}f} S^{-1}B$ is a ring homomorphism that is also integral. 
+
+    In fact here is a stronger result (we state with subrings to avoid notation). If $A \subseteq B$ and $C$ is the integral closure of $A$ in $B$, then 
+    $S^{-1} C$ is the integral closure of $S^{-1}A$ in $S^{-1}B$.
+\end{proposition}
+
+\begin{proof}
+    We will prove the stronger result. 
+    \begin{enumerate}[label = \roman*)]
+        \item Every element of $c/s \in S^{-1}C$ is integral over $S^{-1}A$ because $c/s = 1/s \cdot c/1$. and $1/s \in S^{-1}A$ 
+        (note that this uses $c$ being integral over $A$). 
+        \item Let $b/s$ be integral over $S^{-1}A$, we need to show that $\exists c/s'$ with $c \in C$ and $s' \in S$ s.t 
+        $$b/s = c/s' \in S^{-1}B$$
+        Note since $b/1 = b/s \cdot s/1$ is also integral over $S^{-1}A$ it is enough to show taht 
+        $$b/1 = c/s' \quad c \in C, \ s' \in S$$
+        wlog we get $s=1$. We have an equation of the form 
+        $$(b/1)^n + (\frac{a_{n-1}}{t_{n-1}}) (b/1)^{n-1} + \cdots + (\frac{a_1}{t_1}) (b/1) + (\frac{a_0}{t_0}) = 0$$
+        Clear the denominators by multiplying $t = u^n = (t_0 \cdots t_{n-1})^n$, get $\exists T \in S$ s.t 
+        $$T ((\frac{ub}{1})^n + (a_{n-1} t_0 \cdots t_{n-2}) (\frac{ub}{1}^{n-1}) + (a_{n-2} t_0^2 t_1 \cdots t_{n-2}^1 t_{n-1}^2) (\frac{ub}{1})^{n-2}) = 0$$
+        call the weird terms $\alpha_{n-1}, \ \alpha_{n-2}, \ \cdots \in A$ and call $ub = \beta$ therefore 
+        $$T(\beta^n + \alpha \beta^{n-1} + \cdots + \alpha_0 )= 0$$
+        Multiply by $T^{n-1}$ to get a relation of integral dependence of $T\beta$ over $A$. We deduce that $T \beta \in C$. 
+        So we write $c = T\beta = T u b$ so $b/1 = \frac{Tub}{Tu} = \frac{c}{Tu} \in S^{-1}C$.  
+    \end{enumerate}
+\end{proof}
+
+\textbf{Next family of results.} 
+\begin{itemize}
+    \item \textbf{"Lying over theorem".} every $\mathfrak{p} \in \Spec A$ is $\mathfrak{q}^c$ for some $\mathfrak{q} \in \Spec B$ i.e 
+    $\Spec B \to \Spec A$ is surjective. 
+
+    \item \textbf{"incompatibility theorem".} if $\mathfrak{q}_1 \subseteq \mathfrak{q}_2$ primes and $\mathfrak{q}_1^c = \mathfrak{q}_2^c$ then 
+    $\mathfrak{q}_1 = \mathfrak{q}_2$. 
+
+    \item \textbf{"finiteness of fibres theorem".} if $B$ is Noetherian, the given $\mathfrak{p} \in \Spec A$, there are only finitely many $\mathfrak{q}$'s with 
+    $\mathfrak{q}^c  = \mathfrak{p}$. 
+    
+    \item \textbf{"Going up theorem".} Say $\mathfrak{p}_1 \subseteq \mathfrak{p}_2$ primes of $A$ and let $\mathfrak{q}_1$ be a prime of $B$ with 
+    $\mathfrak{q}_1^c = \mathfrak{p}_1$. Then $\exists \mathfrak{q}_2$ primes of $B$ s.t $\mathfrak{q}_1 \subset \mathfrak{q}_2$ and $\mathfrak{q}_2^c = \mathfrak{p}_2$. (Note that 
+    since $\mathfrak{q}_1^c \ne \mathfrak{q}_2^c$, we have that $\mathfrak{q}_1 \subsetneq \mathfrak{q}_2$). 
+\end{itemize}
+
+\begin{remark}
+    Going up for $2$ primes $\implies$ going up for any finite family of primes.
+\end{remark}
+
+\[
+\begin{tikzcd}[row sep=2.2em, column sep=3.2em]
+\mathfrak p_1 \arrow[r, hook] \arrow[d, mapsto]
+  & \mathfrak p_2 \arrow[r, hook] \arrow[d, mapsto]
+  & \mathfrak p_3 \arrow[r, hook] \arrow[d, mapsto]
+  & \cdots \arrow[r, hook]
+  & \mathfrak p_n \arrow[d, mapsto] \\
+\mathfrak q_1 \arrow[r, hook, dashed]
+  & \mathfrak q_2 \arrow[r, hook, dashed]
+  & \mathfrak q_3 \arrow[r, hook, dashed]
+  & \cdots \arrow[r, hook, dashed]
+  & \mathfrak q_n
+\end{tikzcd}
+\]
+
+
+\begin{example}
+    Consider $\Z \subset \Z[i]$, with $\mathfrak{p} = 5\Z$, notice that $2$ primes lie over $5\Z$, namely 
+    $\angles{2+i}, \ \angles{2-i}$. 
+    \begin{align*}
+        (5\Z)^e &= 5 \Z[i] \\
+        &= \angles{2+i} \angles{2-i} \\
+        &= \angles{2+i} \cap \angles{2-i}
+    \end{align*}
+    Note that these are $2$ different maximal ideals in $\Z[i]$, since 
+    $$\Z[i] / \mathfrak{q} \cong \Z / 5 \Z$$
+    Moreover 
+    $$\angles{2+i, 2-i} \ni (2+i)(2-i) = 5, \ 2+i +2 -i = 4$$
+    Therefore 
+    $$\angles{2+i, 2-i} \ni 1$$
+
+    SImilarly, 
+    $$\Z \subset \Z[\sqrt{-5}]$$
+    $$\mathfrak{p} = 3 \Z \to \mathfrak{p}^e = \angles{3, 1 + \sqrt{-5}} \cdot \angles{3, 1- \sqrt{5}}$$
+\end{example}
+
+\textbf{Picture.}
+Let $A \subseteq B$ be a ring extension, and consider the induced map on spectra
+\[
+\varphi^* : \Spec B \longrightarrow \Spec A, 
+\qquad \mathfrak q \longmapsto \varphi^{-1}(\mathfrak q).
+\]
+From HW we know that the image of $\varphi^*$ is dense in $\Spec A$, i.e.
+\[
+\overline{\operatorname{Im}(\varphi^*)} = \Spec A.
+\]
+Equivalently, every nonempty open subset of $\Spec A$ intersects
+$\operatorname{Im}(\varphi^*)$.
+
+\[
+\begin{tikzcd}
+\Spec B \arrow[r,"\varphi^*"] & \Spec A \\
+& \overline{\operatorname{Im}(\varphi^*)} = \Spec A
+\end{tikzcd}
+\]
+
+\begin{proof}[Lying over + incomparable $\implies$ finiteness of fibres]
+    Let $\mathfrak{p} \in \Spec A$ we know that $\exists \set{q_i \mid i \in I}$ with $\mathfrak{q}_i^c = \mathfrak{p}$. But no 
+    $\mathfrak{q}_i$ contains another. 
+    \textbf{Claim.} This forces the $\mathfrak{q}_i$'s to be minimal over $\mathfrak{p}^e$. \\
+    But $B$ is Noetherian, so $V(\mathfrak{p}^e)$ only has finitely many irreducible components and we only have finitely many 
+    primes over $\mathfrak{p}^e$. 
+
+    Indeed, if $\mathfrak{q}_i \supseteq \hat{\mathfrak{q}} \supseteq \mathfrak{p}^e$, then 
+    $$\mathfrak{p} = \mathfrak{q}_i^c \supseteq \hat{\mathfrak{q}^c }\supseteq \mathfrak{p}$$
+    so $\mathfrak{q}_i^c = \hat{\mathfrak{q}^c}$ and hence $\mathfrak{q}_i = \hat{\mathfrak{q}}$ (by incomparability).
 \end{proof}
 
 \end{document}
