@@ -2831,4 +2831,138 @@ $\operatorname{Im}(\varphi^*)$.
     so $\mathfrak{q}_i^c = \hat{\mathfrak{q}^c}$ and hence $\mathfrak{q}_i = \hat{\mathfrak{q}}$ (by incomparability).
 \end{proof}
 
+\textbf{Goals.} Lying over, incomparability and going-up. 
+
+\begin{lemma}
+    Suppose $A,B$ are domains with $A \subset B$ and $B$ integral over $A$. Then $A$ is a field $\iff$ $B$ is a field.
+\end{lemma}
+
+\begin{proof}
+    \begin{itemize}
+        \item[$\implies$] if $A$ is a field, we want to show that $B$ is a field. \\
+        \textbf{way 1.} Every element $b \in B$ is algebraic over $A$, view as $A \subset \text{field of fraction $L$ of $B$}$. So $A \subseteq A[b]$, since 
+        $b$ is algebraic, $A[b] = A(b) \subseteq B$ is the field extension. So if $b \ne 0$, $b^{-1} \in A[b] \in B$ and therefore 
+        $B$ is a field. \\
+        \textbf{way 2.} Say $b \in B$ and $b \ne 0$, we know that $\exists$ monic equation 
+        $$b^n + a_{n-1} b^{n-1} + \cdots + a_1 b_1 + b_0 = 0, \quad a_i \in A$$
+        Note that we can arrange for $a_0 \ne 0$ since $b \ne 0$. But then 
+        $$-a_0 = b \left(b^n + a_{n-1} b^{n-2} + \cdots + a_1\right) \implies b^{-1} = (-a_0^{-1}) \cdot (b^{n-1} + \cdots + a_1) \in B$$
+        
+        \item[$\impliedby$] Suppose that $B$ is a field. Take $a \ne 0 \in A$, I know that $a^{-1} \in B$ exists, therefore 
+        $a^{-1} \in B$ exists, so $a^{-1}$ is integral over $A$. Therefore 
+        $$a^{-N} + \alpha_{N-1} a^{-N+1} + \cdots + \alpha_0 = 0 \quad \alpha_i \in A$$
+        multiply by $a^{N-1}$, we get 
+        $$a^{-1} + \alpha_{N-1} + \cdots + \alpha_0 a^{N-1} = 0 \implies a^{-1} \in A$$
+    \end{itemize}
+\end{proof}
+
+\begin{corollary}
+    Let $A \to B$ be any integral homomorphism, let $\mathfrak{q}$ be a prime of $B$ and $\mathfrak{p} = \mathfrak{q}^c \in \Spec A$, then 
+    $\mathfrak{q}$ is maximal (in $B$) $\iff$ $\mathfrak{p}$ is maximal (in $A$).
+\end{corollary}
+
+\begin{proof}
+    We have 
+    $$A/\mathfrak{p} \hookrightarrow B/\mathfrak{q}$$
+    This is now an injective integral extension of domains, so apply the lemma. 
+\end{proof}
+
+\begin{theorem}[Lying over]
+    Let $A \subset B$ with $B$ integral over $A$. Then the map $\Spec B \to \Spec A$ is surjective.
+
+    In the more general case we have 
+    $$A \to A / \ker f \hookrightarrow B$$
+    then 
+    \begin{align*}
+        f^*(\Spec B) &= \Spec (A/\ker f) \\
+        &= V(\ker f) \subseteq \Spec A
+    \end{align*}
+\end{theorem}
+
+\begin{remark}
+    Exercise: this map is in fact closed, in fact $A \xrightarrow{f} B$ is any integral extension then 
+    $$f^* \colon \Spec B \to \Spec A$$
+    satisfies 
+    $$f^*(\text{closed in } \Spec B) = \text{closed in } \Spec A$$
+\end{remark}
+
+\begin{proof}
+    Let $\mathfrak{p} \in \Spec A$, localize $A$ and $B$ are at $S = A - \mathfrak{p}$, therefore 
+    $$S^{-1} A \subseteq S^{-1}B$$
+    and this inclusion is still integral, 
+    $$A_\mathfrak{p} \subseteq B_\mathfrak{p}$$
+    Note that $B_\mathfrak{p} \ne 0$ (since $A_\mathfrak{p} \ne 0$). So let's take a maximal ideal 
+    $M \subset B_\mathfrak{p}$, then the contraction of $M$ under $(A_\mathfrak{p} \to B_\mathfrak{p})$ must be maximal in $A_\mathfrak{p}$. 
+    But $A_\mathfrak{p}$ has only $\mathfrak{p}A_\mathfrak{p}$ as maximal ideal, so we have a diagram of ring homom. 
+    \[
+    \begin{tikzcd}[row sep=1.5em, column sep=4.2em]
+    A \arrow[r,hook] \arrow[d,two heads,"{\pi_1}"'] & B \arrow[d,two heads,"{\rho_1}"] \\
+    A/\mathfrak p_1 \arrow[r,hook,"\overline f"] \arrow[d,two heads,"{\pi_{21}}"'] &
+    B/\mathfrak q_1 \arrow[d,two heads,"{\rho_{21}}"] \\
+    A/\mathfrak p_2 \arrow[r,hook,"\overline f_2"] & B/\mathfrak q_2
+    \end{tikzcd}
+    \]
+    with $\mathfrak{p}A_\mathfrak{p}$ contracts to $\mathfrak{p}$.
+\end{proof}
+
+\begin{theorem}[incomparability]
+    Say $A \subset B$, integral extension. Suppose that $\mathfrak{p}, \mathfrak{q}_1, \mathfrak{q}_2$ are primes of $A,B,B$ respectively with 
+    $$\mathfrak{q}_1^c = \mathfrak{q}_2^c = \mathfrak{p}, \quad \mathfrak{q}_1 \subseteq \mathfrak{q}_2$$
+    then 
+    $$\mathfrak{q}_1 = \mathfrak{q}_2$$ 
+\end{theorem}
+
+\begin{proof}
+    Like in the previous theorem, localize at $\mathfrak{p}$ then 
+    $$\mathfrak{q}_1 B_\mathfrak{p} \subseteq \mathfrak{q}_2 B_\mathfrak{p}$$
+    are both primes of $B_\mathfrak{p}$ which both contract to the maximal ideal $\mathfrak{p} A_\mathfrak{p}$. So they 
+    are both maximal, therefore 
+    $$\mathfrak{q}_1 B_\mathfrak{p} = \mathfrak{q}_2 \mathfrak{B}_\mathfrak{p}$$
+    Hence 
+    $$\mathfrak{q}_1 = \mathfrak{q}_2$$
+\end{proof}
+
+\begin{theorem}[Going up thoerem]
+    Let $A \subseteq B$ be integral and let $\mathfrak{p}_1, \mathfrak{p}_2, \mathfrak{q}$ be primes in $A,A,B$ respectively s.t 
+    $\mathfrak{p}_1 \subset \mathfrak{p}_2$ and $\mathfrak{q}_1^c = \mathfrak{p}_1$. Then $\exists \mathfrak{q}_2 \in \Spec B$ with 
+    $\mathfrak{q_1} \subset \mathfrak{q}_2$ and $\mathfrak{q}_2^c = \mathfrak{p}$. 
+    
+    (This can easily adapted to $A \xrightarrow{f} B$)
+\end{theorem}
+
+\begin{proof}
+    We have the integral map
+    $$A/ \mathfrak{p}_1 \hookrightarrow B / \mathfrak{q}_1$$
+    Then $\mathfrak{p}_2 / \mathfrak{p}_1$ is a prime in $A/\mathfrak{p}_1$, therefore by lying over we get a prime $\mathfrak{q}_2/\mathfrak{q}_1$ in $B/\mathfrak{q}_1$ that 
+    contracts to $\mathfrak{p}_2/\mathfrak{p}_1$.
+
+    \[
+    \begin{tikzcd}[row sep=1.2em, column sep=3.6em]
+    A \arrow[r,hook] \arrow[d,two heads] & B \arrow[d,two heads] \\
+    A/\mathfrak p_1 \arrow[r,hook] \arrow[d,two heads] & B/\mathfrak q_1 \arrow[d,two heads] \\
+    A/\mathfrak p_2 \arrow[r,hook] & B/\mathfrak q_2
+    \end{tikzcd}
+    \]
+\end{proof}
+
+\begin{example}
+    View picture, very interesting stuff. Very good intuition for going down. 
+\end{example}
+
+\begin{theorem}[Going down]
+    Let $A \subset B$ be domains, with 
+    \begin{enumerate}
+        \item $B$ integral over $A$.
+        \item $A$ is integrally closed (in its field of fractions $K$).
+    \end{enumerate}    
+    Let $A \supset \mathfrak{p}_2 \supset \mathfrak{p}_1$, let $B \supset \mathfrak{q}_2$ with $\mathfrak{q}_2^c = \mathfrak{p}_2$. 
+    Then $\exists \mathfrak{q}_1 \in \Spec B$ s.t $\mathfrak{q}_2 \supset \mathfrak{q}_1$ and $\mathfrak{q}_1^c = \mathfrak{p}_1$. 
+\end{theorem}
+
+\begin{remark}
+    Let $A \subset K \subset L$ with $A$ integrally closed and $K$ field of fraction and $L$ some big field (say algebraic over $K$). Let $\beta \in L$ integral over $A$ then 
+    therefore the irreducible monic polynomial of $\beta$ over $K$ has coefficients in $A$. i.e 
+    $$f(x) = x^n + k_{n-1} x^{n-1} + \cdots + k_0 = (x-\beta)(x-\beta')\cdots(x-\beta^*)$$
+\end{remark}
+
 \end{document}
