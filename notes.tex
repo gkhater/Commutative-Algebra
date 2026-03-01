@@ -2965,4 +2965,153 @@ $\operatorname{Im}(\varphi^*)$.
     $$f(x) = x^n + k_{n-1} x^{n-1} + \cdots + k_0 = (x-\beta)(x-\beta')\cdots(x-\beta^*)$$
 \end{remark}
 
+\begin{proposition}
+    Let $A \subset K \subset L \subset \overline{K}$ with $A$ domain, $K$ field of fractions and $L$ an algebraic extension of $K$ 
+    (usually we get $K$ as the field of fractions of some $B$ which is integral over $A$). Let $C$ be the integral closure of $A$ in $K$, and 
+    $\beta \in L$ be integral over $A$ (typically $\beta \in B$). Then the irreducible (monic) polynomial of $\beta$ over $K$ naturally lies in $C[x]$.
+\end{proposition}
+
+\begin{proof}
+    Write $f(x) = x^n + k_{n-1} x^{n-1} + \cdots + k_1x + k_0 \in K[x]$ to be the minimal polynomial of $\beta$ over $K$. We can factor in $\overline{K}$ as 
+    $$f(x) = (x- \gamma_1) (x- \gamma_2) \cdots (x-\gamma_n), \quad \beta = \gamma_1$$
+    However, we also know that $\beta$ is a root of a monic polynomial in $A[x]$ so $\exists g(x) \in A[x]$ with 
+    $$g(x) = x^l + a_{l-1} x^{l-1} + \cdots + a_0, \quad g(\beta) = 0$$
+    note that $g$ factors in $\overline{K}[x]$ as 
+    $$g(x) = (x-\delta_1) \cdots (x-\delta_l)$$
+    By the existence of $g$, all the $\delta_i$ are integral over $A$. OTOH since $f(x)$ is irreducible we have 
+    $$f(x) \mid g(x) \in K[x] \implies f \mid g \in \overline{K}[x]$$
+    Therefore 
+    $$[\gamma_1, \cdots, \gamma_n] \subseteq [\delta_1,\cdots, \gamma_l]$$
+    In particular, all the $\gamma_i$'s are integral over $A$. However the coefficients in $f(x)$ are symmetric polynomials over $\gamma_i$'s, i.e 
+    $$k_{n-1} = -(\gamma_1 + \cdots + \gamma_n)$$
+    $$k_{n-1} = (\gamma_1 \gamma_2 + \cdots + \gamma_{n-1}\gamma_n)$$
+    $$\vdots$$
+    $$k_0 = (-1)^n \gamma_1 \gamma_2 \cdots \gamma_n$$
+    Conclude that $k_0, \cdots, k_{n-1}$ are also integral over $A$, but they belong to $K$ therefore 
+    $$k_0, \cdots, k_{n-1} \in C$$ 
+\end{proof}
+
+\subsection{Integrality over an Ideal.} 
+\begin{definition}
+    Let $\mathfrak{a} \subseteq A \subseteq B$ $\mathfrak{a}$ an ideal and $B$ any ring. We say that $b \in B$ is integral over the $\mathfrak{a}$ iff $b$ is a 
+    root of a monic polynomial 
+    $$f = x^n + a_{n-1} x^{n-1} + \cdots + a_0, \quad a_0, \cdots, a_{n-1} \in \mathfrak{a}$$ 
+\end{definition}
+
+\begin{proposition}
+    In the above setting, let $C$ be the integral closure of $A$ in $B$. Then $b \in B$ is integral over $\mathfrak{a}$ iff 
+    $b \in \rad (\mathfrak{a}C)$.
+\end{proposition}
+
+\begin{proof}
+    \begin{itemize}
+        \item[$\implies$] $b$ integral over $\mathfrak{a} \implies b \in C$. Also we have an equation 
+        $$b^n = - a_{n-1} - \cdots - a_1 b - a_0 \quad b \in C \ \mathfrak{a}_i \in \mathfrak{a}$$
+        Therefore 
+        $$b^n \in \mathfrak{a}C \implies b \in \rad (\mathfrak{a}C)$$
+
+        \item[$\impliedby$] Given $b^l \in \mathfrak{a}C$ for some $l$. Therefore $\exists$ finite expression 
+        $$b^l = \alpha_1 c_k + \cdots + \alpha_k c_k, \quad \alpha_i \in \mathfrak{a}, \ c_i \in C$$
+        Let 
+        $$C_0 = A[c_1, \cdots, c_k]$$
+        Note that $C_0$ is a finitely generated $A$-module and $A$-algebra. Let's take $y_1, \cdots, y_n$ to be $A$-generators of 
+        $C_0$. We claim that 
+        $$b^l C_0 \subseteq \mathfrak{a} C_0$$
+        check the details, use the fact that $y_i y_j$ is an $A$-linear combination of $y_1, \cdots, y_n$. 
+        So we get 
+        \begin{align*}
+            b^l &= \aleph_{11} y_1 + \cdots + \aleph_{1n} y_N\\
+            &\vdots \\
+            b^l y_M = \aleph_{N1} y_1 + \cdots + \aleph_{NN}y_N
+        \end{align*} 
+        with $\aleph_{ij} \in \mathfrak{a}$, by the usual argument we get 
+        $$\det (b^l I - \aleph_{ij}) = 0$$
+        but this is a polynomial which is monic in $b^l$ while other factors lie in $\mathfrak{a}$. 
+        $$b^{Nl} + s_{N-1} b^{(N-1)l} + \cdots + s_0 = 0 \quad s_j \in \mathfrak{a}$$
+        so $b$ is integral over $\mathfrak{a}$.
+    \end{itemize}   
+    We get that $b \in B$ is integral over $\mathfrak{a}$ iff $b \in \rad (\mathfrak{a}C)$.
+\end{proof}
+
+\begin{corollary}
+    If $b_1, b_2$ are integral over $\mathfrak{a}$ then so are $b_1 \pm b_2$ and $b_1b_2$. 
+\end{corollary}
+
+\begin{proposition}
+    Suppose we have 
+    $$\mathfrak{a} \subseteq A \subset K \subset L$$
+    with $A$ an integrally closed domain, $K$ field of fractions and $L$ is usually the field of fractions of some $B$ with $B$ integral over $A$.   
+
+    Then $\beta$ is integral over $A$ iff the minimal polynomial of $\beta$ in $K[x]$ has all coefficients $\in \rad \mathfrak{a}$ (except the leading one). 
+\end{proposition}
+
+\begin{proof}
+    \begin{itemize}
+        \item[$\impliedby$] If $\beta$ satisfies an equation 
+        $$\beta^n + r_{n-1} \beta^{n-1} + \cdots + r_0 = 0 \quad r_i \in \rad \mathfrak{a}$$
+        then $\beta$ is integral over $A$ so $\beta \in \tilde{B}$ (the integral closure of $A$ in $L$), 
+        $\beta^n \in (\rad \mathfrak{a}) \beta \subseteq (\rad \mathfrak{a}) \tilde{\beta}$. Therefore $\beta \in \rad (\mathfrak{a} \tilde{B})$ so $\beta$ is integral 
+        over $\mathfrak{a}$.
+        
+        \item[$\implies$] Imitate the proof of the less general proposition above. Say the irreducible polynomial of $\beta$ over $K$ is 
+        $$x^n + k_{n-1} x^{n-1} + \cdots + k_0 = (x- \gamma_1 ) \cdots (x- \gamma_n)$$
+        we know that $\beta$ satisfies an equation 
+        $$g(x) = x^l + \alpha_{l-1} + \cdots + \alpha_0 \quad \alpha_i \in \mathfrak{a}$$
+        but 
+        $$g(x) = (x- \delta_1) \cdots (x-\delta_l)$$
+        therefore as before each $\gamma_i$ is a $\delta_j$ hence each $\gamma_i$ is integral over $A$. Then the $k_i$'s are symmetric polynomials 
+        in the $\gamma_i$'s, so each $k_i$ is integral over $\mathfrak{a}$ and in $K$. Applying our last result with $B = K$ so $C = A$; so each $k_i \in \rad(\mathfrak{a} A) = \rad (\mathfrak{a})$. 
+    \end{itemize}
+\end{proof}
+
+
+\begin{proof}[Proof of Going Down theorem]
+    Given $A \subseteq B$ domains, $A$ integrally closed and $B$ integral over $A$. We have primes $\mathfrak{p}_1, \ \mathfrak{p}_2 \in \Spec A$, 
+    $\mathfrak{q}_2 \in \Spec B$ with 
+    $$\begin{cases}
+        \mathfrak{p}_2 \supset \mathfrak{p}_1 \\
+        \mathfrak{q}_2^c = \mathfrak{p}_2
+    \end{cases}$$
+    Then we want to find $\mathfrak{q}_1$ prime of $B$ s.t 
+    \begin{enumerate}
+        \item $\mathfrak{q}_1 \subset \mathfrak{q}_2$ 
+        \item $\mathfrak{q}_1^c = \mathfrak{p}_1$
+    \end{enumerate}
+    
+    Let $S = A - \mathfrak{p}_1$ and $T = B- \mathfrak{q}_2$, note that we want 
+    \begin{enumerate}[label = (\roman*)]
+        \item $\mathfrak{q}_1 \supseteq \mathfrak{p}_1 B$ (so $\mathfrak{q}_1^c \supseteq \mathfrak{p}_1$)
+        \item $\mathfrak{q}_1 \cap S = \varnothing$ (to ensure $\mathfrak{q}_1^c \subseteq \mathfrak{p}_1$)
+        \item $\mathfrak{q}_1 \cap T = \varnothing$ (to ensure $\mathfrak{q}_1 \subseteq \mathfrak{q}_2$)
+    \end{enumerate} 
+    It's enough to show that 
+    $$ST \cap \mathfrak{p}_1 B = \varnothing$$
+    ($ST$ is multiplicatively closed, take $\mathfrak{q}_1$ maximal among ideals containing $\mathfrak{p}_1B$ and not meeting $ST$). 
+    
+    Suppose that we have $\beta = st \in \mathfrak{p}_1B$. \\
+    \textbf{Step 1.} $t \in T = B- \mathfrak{q}_2 \subseteq B$, therefore $t$ is integral over $A$, $A$ integrally closed 
+    so the monic polynomial has the form 
+    $$x^n + a_{n-1} x^{n-1} + \cdots + a_0, \quad a_i \in A$$
+    i.e 
+    $$K \subseteq K[t] \subseteq L$$
+    from $\beta = st$ and 
+    $$t^n + a_{n-1} t^{n-1} + \cdots + a_0 = 0$$
+    we obtain that (by multiplying by $S^n$)
+    $$\beta^n + (a_{n-1} S)\beta^{n-1} + \cdots + a_0 S^n = 0$$
+    So the polynomial 
+    $$x^n + (a_{n-1} S) x^{n-1} + \cdots + a_0 s^n \in A[x]$$
+    has $\beta$ as a root, but it is also irreducible in $K[x]$ because
+    $x^n + a_{n-1} + \cdots + a_0$ is irreducible in $K[x]$. i.e. 
+    $$x^n + (a_{n-1} s) x^{n-1} + \cdots + a_0 s^n$$
+    is the minimal polynomial of $\beta$ over $K$. However, if $\beta \in \mathfrak{p}_1B$ then
+    $\beta \in \rad (\mathfrak{p}_1 B)$ so apply our earlier result with this $A$ and $B$ ($C = B$ the integral closure of $A$ in $B$). 
+    We get that $\beta$ is integral over $\mathfrak{p}_1$. Therefore by the result above all elements 
+    $$a_{n-1} s, \cdots, a_0 s^n \in \rad(\mathfrak{p}_1) = \mathfrak{p}_1$$
+    But $S = A -\mathfrak{p}_1$ so all of 
+    $$a_{n-1}, \ \cdots, a_0 \in \mathfrak{p}_1$$
+    therefore $t \in B$ is integral over $\mathfrak{p}$, hence 
+    $$t \in \rad (\mathfrak{p}_1B) \subseteq \rad(\mathfrak{p}_2 B) \subseteq \rad (\mathfrak{q}_2)$$
+    Therefore $t \in \mathfrak{q}_2$ but $t \in B- \mathfrak{q}_2$ contradiction!
+\end{proof}
+
 \end{document}
