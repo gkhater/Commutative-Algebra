@@ -2508,8 +2508,8 @@ $\exists$ nonzero polynomial $c_n x^n + \cdots+ c_1 x + c_0 = 0$ with $c_0, \cdo
 \item[$(1)\Rightarrow(2)$]
 Suppose $b$ satisfies a monic polynomial
 \[
-b^n + a_{n-1}b^{n-1} + \cdots + a_0 = 0,
-\qquad a_i \in A.
+b^n + a_{n-1}b^{n-1} + \cdots + a_0 = 0
+\quad a_i \in A
 \]
 Then every power $b^m$ with $m\ge n$ can be written as an $A$-linear
 combination of $1,b,\dots,b^{n-1}$. Equivalently, if
@@ -3112,6 +3112,171 @@ $\operatorname{Im}(\varphi^*)$.
     therefore $t \in B$ is integral over $\mathfrak{p}$, hence 
     $$t \in \rad (\mathfrak{p}_1B) \subseteq \rad(\mathfrak{p}_2 B) \subseteq \rad (\mathfrak{q}_2)$$
     Therefore $t \in \mathfrak{q}_2$ but $t \in B- \mathfrak{q}_2$ contradiction!
+\end{proof}
+\section{Krull dimension of a ring}
+We are aiming to show the following results: 
+\begin{enumerate}
+    \item Noether Normalization theorem
+    \item Hilbert Nullstenllensatz
+    \item Krull dimension of a commutative ring
+\end{enumerate}
+The first two apply to "finitely generated $k$-algebra", i.e. rings of the form 
+$$A = \frac{k[x_1, \cdots, x_n]}{\mathfrak{a}} = k[\alpha_1, \cdots, \alpha_n]$$
+The main idea is that in this case, $\Spec A$, relates to the set of solutions to the polynomials in $\mathfrak{a}$. 
+
+View the picture with $pt \subset curve \subset surface$ which are all irreducible, this corresponds 
+$$V(\mathfrak{p}_0) \subset V(\mathfrak{p}_1) \subset V(\mathfrak{p}_2)$$
+with 
+$$\mathfrak{p}_2 \subsetneq \mathfrak{p}_1 \subsetneq \mathfrak{p}_0$$
+
+\begin{definition}
+    The Krull dimension of a commutative ring $A$, if it exists is the maximum of the length 
+    of all proper chains of prime ideals in $A$
+    $$\mathfrak{p}_0 \supsetneq \mathfrak{p}_1 \supsetneq \cdots \supsetneq \mathfrak{p}_r$$ 
+\end{definition}
+
+\begin{remark}
+    \begin{enumerate}
+        \item There may not exist an upper bound, in that case we say that $\dim A = \infty$.  
+        \item In the Noetherian case, if we start with some $\mathfrak{p}_0$, then the length descending chains of primes 
+        starting at a fixed $\mathfrak{p}_0$ is bounded above, therefore $\dim A_{\mathfrak{p}_0}$ must be finite. 
+        We call this the height of $\mathfrak{p}_0$. 
+
+        (Note that the fact that $A$ is Noetherian doesn't prevent it from having infinite Krull dimension, but $A$ Noetherian and local implies that 
+        $\dim A < \infty$).
+
+        \item  Even in a Noetherian ring we can have the situation 
+        $$diagrm$$
+        without more intermediate primes existing.
+    \end{enumerate}
+\end{remark}
+
+\begin{proposition}
+    If $A \subset B$ is an integral extension, then 
+    $$\dim A = \dim B$$
+\end{proposition}
+
+\begin{proof}
+    Follows from lying over, going up and incomparability. More precisely a chain of primes in $A$ 
+    $$\mathfrak{p}_0 \supset \cdots \supset \mathfrak{p}_r$$
+    Then find a $\mathfrak{q}_r \in \Spec B$ with $\mathfrak{q}_r^c = \mathfrak{p}^r$ (lying over), use going up 
+    to find 
+    $$\mathfrak{q}_0 \subset \cdots \subset \mathfrak{q}_r, \quad \mathfrak{q}_i^c = \mathfrak{p}_i$$
+    Note that since the contractions are different, this is clearly a proper chain hence 
+    $$\dim A \le \dim B$$
+    Conversely, if I have a chain of primes of length $r$ in $B$, i.e. 
+    $$ \mathfrak{q}_0 \subset \cdots \subset \mathfrak{q}_r$$
+    Therefore 
+    $$\mathfrak{q}_0^c \subset \cdots \subset \mathfrak{q}_r^c$$
+    But this is a proper chain in $A$ by incomparability. So this is gives 
+    $$\dim B \le \dim A$$
+\end{proof}
+
+\subsection*{Noether Normalization Lemma.}
+This is an amazing technical tool for algebras of finite type over a field. 
+\begin{theorem}
+    Let $k$ be a field, and let $A = k[\alpha_1, \cdots, \alpha_n]$ be an algebra of finite type over $k$. Then 
+    $\exists \beta_1, \cdots, \beta_r \in A$ (poss $r = 0$), which are "algebraically independent" such that 
+    $$A' := k[\beta_1, \cdots, \beta_r] \subset A$$
+    and $A$ is integral over $A'$. 
+
+    Moreover, if $k$ is infinite (not a finite field), then we can take 
+    \begin{align*}
+        \beta_1 &= c_1 \alpha_1 + \cdots + c_{1n} \alpha_n \\
+        &\vdots \\
+        \beta_r &= c_{r1} \alpha_1 + \cdots + c_{rn} \alpha_n
+    \end{align*} 
+    with $c_{ij} \in K$
+\end{theorem}  
+
+\begin{remark}
+    In the context above, algebraically independent means that the homomorphism 
+    $$k[y_1, \cdots, y_r] \to A$$
+    with $y_i \to \beta_i$ is injective. i.e. if $f(\beta_1, \cdots, \beta_r) = 0$ then $f = 0$.  
+\end{remark}
+
+\begin{remark}
+    If $k$ is algebraically closed, then $k$ is infinite.
+\end{remark}
+
+\begin{remark}
+    $A$ is then a finitely generated $A'$-module
+    and 
+    $\dim A = \dim A' = \dim k[x_1,\cdots, x_r]$ (which we expect to be $r$).
+    
+    Clearly we have that 
+    $$\dim k[x_1, \cdots, x_r] \ge r$$
+    (think of point, line, plane, ...) the chain is 
+    $$\angles{x_1, \cdots, x_r} \supsetneq \angles{x_1, \cdots, x_{r-1}} \supsetneq \angles{x_1} \supsetneq 0$$
+\end{remark}
+
+\begin{remark}
+    In the case where $\beta_1, \cdots, \beta_r$ are linear combinations of $\alpha_1, \cdots, \alpha_n$ we have 
+    $$k[\alpha_1, \cdots, \alpha_n] = \frac{k[x_1, \cdots, x_n]}{\mathfrak{a}}$$
+    wit $k[y_1, \cdots, y_r]$ injects int this. therefore 
+    $$\Spec \frac{k[x_1, \cdots, x_r]}{\mathfrak{a}} = V(\mathfrak{a}) \hookrightarrow \Spec k[y_1, \cdots, y_r]$$
+    (view the picture). 
+\end{remark}
+
+\begin{lemma}
+    For the proof of Noether Normalization, let $0 \ne f(x_1, \cdots, x_n) \in k[x_1, \cdots, x_n]$ 
+    polynomial algebra. Then $\exists y_1, \cdots, y_n$ s.t. $k[x_1, \cdots, x_n] = k[y_1, \cdots, y_n]$ (still algebraically independent) 
+    "change of coordinates" s.t. in terms of the $y_i$'s we get 
+    $$f = c y_n^t + f_{t-1} (y_1 \cdots y_{n-1}) y_n^{d-1} + \cdots + f_1 (y_1 \cdots y_{n-1}) y_n + f_0 (y_1 \cdots y_1)$$
+    with $c \in k^*$ (so $f$ is basically monic), moreover if $k$ is infinite we can take this change of coordinates to be linear, i.e. 
+    \begin{align*}
+        x_1 &= c_{11} y_1 + \cdots + c_{1n} y_n \\
+        &\vdots \\
+        x_n &= c_{n1} y_1 + \cdots + c_{nn} y_n
+    \end{align*}    
+    with $(c_{ij}) \in GL_n(k)$.
+\end{lemma}
+
+\begin{proof}
+    First do the case where $k$ is infinite. Make a change of variables: 
+    \begin{align*}
+        x_1 &= y_1 + \lambda_1 y_n \\
+        x_2 &= y_2 + \lambda_2 y_n \\
+        &\vdots \\
+        x_{n-1} &= y_{n-1} +\lambda_{n-1} y_n \\
+        x_n &= y_n
+    \end{align*}
+    with $\lambda_1, \cdots, \lambda_{n-1} \in K$ to be determined.
+    [write out the change of coordinate matrix, clearly it has $\det = 1$]
+
+    Write $f$ in terms of its "homogeneous components" in the $x_i$ and then substitute in terms of the $y_i$'s. 
+    In general
+    $$f(x_1, \cdots, x_n) = h_d(x_1, \cdots, x_n) + h_{d-1} (x_1, \cdots, x_n) + \cdots + h_0 (x_1, \cdots, x_n)$$
+    $h_d$ is a $k$-linear combination of terms $x_1^{j_1} \cdots x_n^{j_n}$ with 
+    $\sum j_i = d$. 
+    Now substitute, in terms of the $y_i$'s we get 
+    \begin{align*}
+        f &= h_d(y_1 + \lambda_1 y_n, \cdots, y_{n-1} + \lambda_{n-1} y_n, y_n) + h_{d-1} (\bullet) + \cdots \\
+        &=(h_d(\lambda_1,\cdots, \lambda_{n-1}, 1) y_n^d + \text{lower degree in $y_d$}) + \text{terms of degree $\le d-1$}
+    \end{align*}
+    We get that coefficient of $y_n^d$ is 
+    $$h_d(\lambda_1, \cdots, \lambda_{n-1}, 1)$$
+    This is a nonzero polynomial in the $\lambda_i$'s (since $h_d(x_1, \cdots, x_n)$ is homogeneous of pure degree $d$ in its arguments, 
+    view the example). Easy fact (BAI, Ch2): if the $\lambda_i$'s are taken from an infinite field, we can find 
+    such $\lambda_i$'s s.t. $h_d(\lambda_1, \cdots, \lambda_{n-1}, 1) \ne 0$ in $K$. 
+    Therefore after the change of variable, 
+    $$f = c y_n^d + \text{lower degree terms in } y_n \text{ involving $y_1, \cdots, y_{n-1}$}$$
+
+    In the case where $k$ is a finite field, make a change of coordinates 
+    \begin{align*}
+        x_1 &= y_1 + y_n^N \\
+        x_2 &= y_2 + y_n^{N^2} \\
+        x_3 &= y_3 + y_n^{N^3} \\
+        &\vdots \\
+        x_{n-1} &= y_{n-1} + y_{n}^{N^{n-1}} \\
+        x_n &= y_n
+    \end{align*} 
+    for some big $N$, therefore if 
+    $$f = \sum c_{i_1, \cdots, i_n} x_1^{i_1} \cdots x_n^{i_n}$$
+    Then the term includes a pure power of $y_n$, $i_1 N + i_2N^2 + \cdots + i_{n-1} N^{n-1} + i_n$ with coefficient 
+    $c_{i_1, \cdots, i_n}$. Take $N > \max_j i_j$, then all the expression as above are distinct: 
+    they all give different powers of $y_n$ (base $N$ notation); so the largest one "wins" and $f$ is essentially monic
+    in $y_n$. 
 \end{proof}
 
 \end{document}
