@@ -3279,4 +3279,107 @@ This is an amazing technical tool for algebras of finite type over a field.
     in $y_n$. 
 \end{proof}
 
+\begin{proof}[Proof of the Noether Normalization thoerem]
+    We will induct on $n$, we can do the cases $n = 0$ ($A = k$), and $n = 1$  ($A = k[\alpha]$) by hand ourselves ($A = k[x]$ or $A = k[x] / \angles{\text{monic poly}}$).
+
+    So suppose we know Noether normalization for $n-1$ variables. Given $A = k[\alpha_1, \cdots, \alpha_n]$, if the $\alpha_i$'s are already algebraically independent 
+    then we don't need to do anything ($\beta_i = \alpha_i, \ A' = A$). Otherwise $\exists f(x_1, \cdots, x_n) \ne 0 \in k[x_1, \cdots, x_n]$ s.t. $f(\alpha_1, \cdots, \alpha_n) = 0$, 
+    by the lemma there exists a change of variables s.t. $y_1, \cdots, y_n$ replace $x_1, \cdots, x_n$ and their images $\gamma_1, \cdots, \gamma_n$ (in $A$), replace $\alpha_1, \cdots, \alpha_n$ s.t. 
+    $f$ is monic (pseudo-monic) in $y_n$. Hence, we get that $A = k[\gamma_1, \cdots, \gamma_n]$ and we have a relation between the $\gamma_i$'s of the form 
+    $$c \gamma_n^d + g(\gamma_1, \cdots, \gamma_{n-1}) \gamma_n + \cdots + g_0 (\gamma_1, \cdots, \gamma_{n-1}) = 0$$
+    with $c \ne 0$ and $c \in k$ This is the reexpression of the relation $f[\gamma_1, \cdots, \gamma_n] = 0$ in terms of the $\gamma_i$'s. At this point, we see that 
+    $$A \supseteq A_0 = k[\gamma_1, \cdots, \gamma_{n-1}]$$
+    and $A = A_0[\gamma_n]$ is integral over $A_0$. Now use Noether normalization on $A_0$ (which has $n-1$ variables), therefore after a further change of variable we get that 
+    $A_0 \supseteq k[\beta_1, \cdots, \beta_r]$ integral extension, we take $A' = k[\beta_1, \cdots, \beta_r]$ then $A$ is integral over $A_0$ which is integral over $A'$ and we are done.  
+\end{proof}
+
+\begin{corollary}
+    $\dim A = \dim A'$ (in the context of the theorem above), notice that 
+    $$\dim A' \ge r$$ 
+    due to 
+    $$0 \subsetneq \angles{z_1} \subseteq \cdots \subseteq \angles{z_1, \cdots, z_r}$$
+\end{corollary}
+
+\begin{corollary}
+    Suppose that $A = k[{\alpha_1, \cdots, \alpha_n}]$ is a field, then in fact $A$ is a finite algebraic extension of $k$ 
+    with $\dim_k A \le n$ and all elements of $A$ are algebraic over $k$. In particular we can embed $A$ into the 
+    algebraic closure $\overline{k}$ of $k$.
+\end{corollary}
+
+\begin{proof}
+    Take a Noether normalization, so 
+    $$A \supseteq A' = k[\beta_1, \cdots, \beta_r]$$
+    integral extension, therefore by an earlier result, since $A$ is field then $A'$ is also a field. Therefore if $r \ge 1$ we have that 
+    $A'$ cannot be a field, hence $r = 0$ and $A' = k$ so $A'$.
+\end{proof}
+
+\begin{theorem}[Hilbert's Nullztellensatz (1)]
+    Let $A = k[x_1, \cdots, x_n]$ and let $\mathfrak{a} \subseteq A$, TFAE 
+    \begin{enumerate}
+        \item $\mathfrak{a} \ne \angles{1}$ ($\mathfrak{a}$ is proper). 
+        \item $\exists \underline{a} = (a_1, \cdots, a_n) \in \overline{k}^n$ s.t. $\forall f \in \mathfrak{a}$ we have that 
+        $$f (a_1, \cdots, a_n) = 0$$
+        \item $\exists L \supset k$ some field (need not be algebraic) and some $\underline{a} \in L^n$ s.t. $\forall f \in \mathfrak{a}$ 
+        $$f(\underline{a}) = 0$$ 
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \begin{itemize}
+        \item[$(2) \implies (3)$] easy. 
+        \item[$(3) \implies (1)$] If $\mathfrak{a} = \angles{1}$ then we can not find a common zero over any field. 
+        \item[$(1) \implies (2)$] Suppose that $\mathfrak{a} \subset k[x_1, \cdots, x_n]$, we know that $\exists \mathfrak{m}$ a maximal ideal with 
+        $\mathfrak{a} \subset \mathfrak{m} \subsetneq A$ then $A/\mathfrak{m}$ is a field, so by the previous corollary we can embed 
+        $$A/\mathfrak{m} \hookrightarrow \overline{k}$$
+        Then consider the canonical reduction map
+        $$\varphi \colon A \to A/m$$
+        Call $\varphi(x_i) = a_i \in \overline{k}$, then $f \in \mathfrak{a} \implies f \in \mathfrak{m}$, hence 
+        $$\varphi(f) = 0$$
+        Hence 
+        $$f(\underline{a}) = 0$$
+    \end{itemize}
+\end{proof}
+
+\begin{definition}
+    If $\mathfrak{a} \subset k[x_1, \cdots, x_n]$, define 
+    $$V'(\mathfrak{a}) = \set{\underline{a} \in \overline{k}^n \mid \forall f \in \mathfrak{a} \ f(\underline{a}) = 0}$$
+    If $X \subseteq \overline{k}^n$ then 
+    $$I_k(X) = \set{f \in k[x_1, \cdots, x_n] \mid \forall \underline{a}, \ f(\underline{a}) = 0}$$
+    Its easy to check that $I_k(X)$ is an ideal of $k[x_1, \cdots, x_n]$.
+\end{definition}
+
+\begin{theorem}[Hilbert's Nullztellensatz (2)]
+    In the setting above we have 
+    $$I_k(V'(\mathfrak{a})) = \rad a$$    
+\end{theorem}
+
+\begin{proof}
+    \begin{itemize}
+        \item[$\subseteq$] Note that
+        \begin{align*}
+            f \in \rad \mathfrak{a} &\iff \exists N \ f^N \in A \\
+            &\iff \text{In } (A/\mathfrak{a})_f \text{ is } \frac{1 + \mathfrak{a}}{1} = 0
+        \end{align*}
+        So let's study 
+        $$(A/\mathfrak{a})_f = A_f / \mathfrak{a}A_f$$
+        Note that 
+        $$A_f = A[f^{-1}] \cong A[y]/\angles{yf - 1}$$
+        So 
+        $$A_f \cong k[x_1, \cdots, x_n, y] / \angles{yf - 1}$$
+        So 
+        $$A_f / \mathfrak{a} A_f \cong k[x_1, \cdots, y]/\angles{\mathfrak{a}, yf-1}$$
+        If  $\frac{1 + \mathfrak{a}}{1} \ne 0$ in $(A/\mathfrak{a})_f$, then 
+        $$\angles{a, yf-1} \subsetneq k[x_1, \cdots, x_n, y]$$
+        So it would have a common vanishing point $(a_1, \cdots, a_n, b) \in \overline{k}^n$ that satisfy: $\forall h \in \mathfrak{a}$
+        $$h(a_1, \cdots, a_n) = 0, \quad b f(a_1, \cdots, a_n) - 1= 0$$
+        If $f \in I_k(V'(\mathfrak{a}))$, this isn't possible because this would mean that $(a_1, \cdots, a_n) \in V'(\mathfrak{a})$ and 
+        $f(a_1, \cdots, a_n) \ne 0$. Contradiction.
+
+        \item[$\supseteq$] If $f^N \in \mathfrak{a}$ and $\underline{a} \in V'(\mathfrak{a})$ then 
+        $$f^N (\underline{a}) = 0$$
+        so $f(\underline{a}) = 0$, this holds for all $\underline{a} \in V'(\mathfrak{a})$ so 
+        $f \in I_k(V'(\mathfrak{a}))$.
+    \end{itemize}
+\end{proof}
+
 \end{document}
