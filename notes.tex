@@ -3172,7 +3172,7 @@ $$\mathfrak{p}_2 \subsetneq \mathfrak{p}_1 \subsetneq \mathfrak{p}_0$$
     $$\dim B \le \dim A$$
 \end{proof}
 
-\subsection*{Noether Normalization Lemma.}
+\subsection{Noether Normalization Lemma.}
 This is an amazing technical tool for algebras of finite type over a field. 
 \begin{theorem}
     Let $k$ be a field, and let $A = k[\alpha_1, \cdots, \alpha_n]$ be an algebra of finite type over $k$. Then 
@@ -3380,6 +3380,178 @@ This is an amazing technical tool for algebras of finite type over a field.
         so $f(\underline{a}) = 0$, this holds for all $\underline{a} \in V'(\mathfrak{a})$ so 
         $f \in I_k(V'(\mathfrak{a}))$.
     \end{itemize}
+\end{proof}
+
+% \subsection{The Zariski topology on $\overline{k}^n$.}
+Let $\overline{k}$ be an algebraically closed field, if $\mathfrak{b} \subseteq k[x_1, \cdots, x_n]$ we have 
+$$V'(\mathfrak{b}) = \set{\underline{a} = (a_1, \cdots, a_n) \colon \ \forall f \in \mathfrak{b} \ f(\underline{a}) = 0}$$
+More generally for any $\Sigma \subseteq k[x_1, \cdots, x_n]$ we have 
+$$V'(\Sigma) = \set{\underline{a} = (a_1, \cdots, a_n) \colon \ \forall f \in \Sigma \ f(\underline{a}) = 0} = V'(\mathfrak{\angles{\Sigma}})$$
+Similarly if $X \subseteq \overline{k}^n$ we get 
+$$I(X) = I_{\overline{k}} = \set{f \in \overline{k}[x_1, \cdots, x_n] \colon \forall \underline{a} \in X, \ f(\underline{a}) = 0}$$
+The first version of the Nullstenllensatz gives that if $\mathfrak{b} \subseteq \overline{k} [x_1, \cdots, x_n] \implies V'(\mathfrak{b}) \ne 0$
+and the second version says that $I(V'(\mathfrak{b})) = \rad \mathfrak{b}$. 
+
+The Zariski topology on $\overline{k}^n$ says that closed sets are those of thee form $V'(\Sigma)$ for some $\Sigma$, 
+$$\Sigma \subset \overline{k}[x_1, \cdots, x_n]$$
+Note that we can stick to ideals since $V'(\Sigma) = V(\angles{\Sigma})$, moreover 
+$$V'(\bigcup_i \Sigma_i) =  \bigcup_{i} V'(\Sigma_i), \quad V'(\sum_i \mathfrak{b}_i) = \bigcap_i V'(\mathfrak{b}_i)$$
+Note that 
+$$V'(\set{fg \colon f \in \Sigma_1, \ g \in \Sigma_2}) = V'(\Sigma_1) \cup V'(\Sigma)$$
+and 
+$$V'(\mathfrak{b}_1 \mathfrak{b}_2) = V'(\mathfrak{b}_1) \cup V'(\mathfrak{b}_2)$$
+This defines a topology. 
+
+\begin{remark}
+    In this Zariski topology we have 
+    $$V(I(X)) = \overline{X}$$
+\end{remark}
+
+\begin{remark}
+    $\overline{k}^n$ can be identified with 
+    $$\operatorname{MaxSpec} \overline{k}[x_1, \cdots, x_n] = \set{\mathfrak{m} \subset \overline{k}[x_1, \cdots, x_n]}$$
+    via 
+    $$\underline{a} = (a_1, \cdots, a_n) \in \overline{k}^n \to \mathfrak{m}_a = \angles{x_1-a_1, \cdots, x_n-a_n} = I(\set{a})$$
+    All maximal ideals are in this way, because $\mathfrak{m} \subsetneq \overline{k}[x_1, \cdots, x_n]$ hence 
+    $$V'(\mathfrak{m}) \ne \varnothing$$
+    take $\underline{a} \in V'(\mathfrak{m})$, then $\mathfrak{m} \subseteq \mathfrak{m}_a$ so $\mathfrak{m} = \mathfrak{m}_a$. 
+    We have 
+    $$\overline{k}^n \cong \operatorname{MaxSpec} \subset \Spec (\overline{k}[x_1, \cdots, x_n])$$
+    and 
+    $$V'(\mathfrak{b}) = V(\mathfrak{b}) \cap \operatorname{MaxSpec}$$
+    i.e. $\underline{a}$ s.t. $\forall f \in \mathfrak{b}$, $f(\underline{a}) = 0$ and $\forall f \in \mathfrak{b}$ 
+    $f \in \mathfrak{m}_a$ $\mathfrak{b} \subseteq \mathfrak{m}_a$. 
+
+    We also have that 
+    $$V'(I(V'(\mathfrak{b}))) = V'(\mathfrak{b})$$
+    and 
+    $$I(V'(I(X))) = I(X)$$
+    Moreover 
+    $$I(V'(\mathfrak{b}))  = \rad \mathfrak{b}, \quad V'(I(x)) = \overline{X}$$
+\end{remark}
+
+We have that 
+$$\operatorname{MaxSpec} (\frac{\overline{k}[x_1, \cdots, x_n]}{\mathfrak{b}}) \cong_{homeo} V'(\mathfrak{b}) \subset \overline{k}^n$$
+We have the mutually inverse bijections
+$$\text{all Zariski closed subsets $Z \subseteq \overline{k}^n$} \rightleftarrows^I_{V'} \text{all radical ideals $\mathfrak{b} \subset \overline{k}[x_1, \cdots, x_n]$}$$
+
+Culture, the last version of the Nullstenllensatz says that 
+$$\rad \mathfrak{b} = \bigcap_{\substack{\mathfrak{m} \supseteq \mathfrak{b} \\ \mathfrak{m} \ \text{maximal}}} \mathfrak{m}$$
+equivalently any prime ideal of $\overline{k}[x_1, \cdots, x_n]$ is an intersection of maximal ideals. 
+
+\subsection{Dimension of Affine rings}
+These are the rings of the form 
+$$k[\alpha_1, \cdots, \alpha_n] \cong \frac{k[x_1, \cdots, x_n]}{\mathfrak{b}}$$
+We saw that 
+$$A \supseteq A' = k[\beta_1, \cdots, \beta_r]$$
+with $\beta_i$'s algebraically independent and $A$ is integral over $A'$ and $\dim A = \dim A' \ge r$ (we want to show $=r$). 
+
+We need the notion of transcendence degree and transcendence basis: In general we have $k \subseteq L$ with $k$ a field and $L$ any field extension 
+(not necc algebraic). 
+\begin{definition}
+    A set of elements $\set{\beta_1, \cdots, \beta_n} \subset L$ is said to be algebraically independent over $K$ iff the homomorphism 
+    $$k[x_1, \cdots, x_n] \ni x_i \rightleftarrows \beta_i \in L$$
+    iff there is no nonzero $f \in [x_1, \cdots, x_n]$ s.t. $f(\beta_1, \cdots, \beta_n) = 0$. 
+
+    Otherwise, they are said to be algebraically dependent.
+\end{definition}
+
+\begin{definition}
+    $\beta_1, \cdots, \beta_n \in L$ algebraically generate $L$ (over $K$) iff $L$ is an algebraic field extension of $k(\beta_1, \cdots, \beta_n)$. 
+\end{definition}
+
+\begin{definition}
+    $\gamma_1, \cdots, \gamma_n \in L$ are a transcendence basis for $L$ (over $K$) iff they are algebraically independent and they algebraically generate $L$.  
+\end{definition}
+
+\begin{example}
+    If $A = k[\alpha_1, \cdots, \alpha_n]$ is a domain, and $A' = k[\beta_1, \cdots, \beta_r] \subset A$ is a Noether normalization of 
+    $A$; then we can look at the field of fractions $K$ of $A'$ and $L$ of $A$. Note that 
+    $$K = (A'-\set{0})^{-1} A', \quad L = (A'-\set{0})^{-1} A$$
+    Then $L$ is algebraic over $k(\beta_1, \cdots, \beta_r)$ and $\beta_1, \cdots, \beta_r$ is the transcendence basis of $L$ over $k$.
+
+    By abuse of terminology $\set{\beta_1, \cdots, \beta_r}$ is a transcendence basis of $A$ over $K$.
+\end{example}
+
+\begin{theorem}
+    Any two transcendence bases for $L/k$ have the same cardinality; we call this the transcendence degree of $L$ over $k$ we write 
+    $$\operatorname{tr.deg}_k (L)$$
+\end{theorem}
+
+Note that this implies the following theorem:
+\begin{theorem}
+    Let $A =k[\alpha_1, \cdots, \alpha_n]$ be a domain that is a f.g. $k$-algebra. Then 
+    $$\dim A = \operatorname{tr.deg}_k (A)$$
+    By the above theorem; this is the cardinality of any transcendence basis. 
+\end{theorem}
+
+\begin{corollary}
+    $\dim k[x_1, \cdots, x_n] = n$.
+\end{corollary}
+
+To prove the above we first need 
+\begin{proposition}
+    If $A = k[\alpha_1, \cdots, \alpha_n]$ is a domain and $\mathfrak{p} \subset A$ is a nonzero prime ideal; then 
+    $$\operatorname{tr.deg.}_k (A/\mathfrak{p}) < \operatorname{tr.deg.}_k (A)$$
+\end{proposition}
+
+\begin{proof}
+    Given $A = k[\alpha_1, \cdots, \alpha_n] \supseteq A' = k[\beta_1, \cdots, \beta_r]$ a Noether normalization; $r$ is the transcendence 
+    degree of $A$ over $k$. We are also given $\mathfrak{p} \ne 0 \subset A$ we want to show that 
+    $$\operatorname{tr.deg.} (A/\mathfrak{p}) \le r-1$$
+    Note that $\mathfrak{p}^c \ne 0 \subset A'$; moreover 
+    $$A'/\mathfrak{p}' \hookrightarrow A/\mathfrak{p}$$
+    Also $A/\mathfrak{p}$ is still integral over $A'/\mathfrak{p}'$; hence $\operatorname{tr.deg.}_k A/\mathfrak{p} = \operatorname{tr.deg.}_k (A'\mathfrak{p}')$
+    we want to show that 
+    $$\operatorname{tr.deg.} A'/\mathfrak{p}' \le r-1$$
+    Note that we also have 
+    $$k \subset k(\gamma_1, \cdots, \gamma_l) \subset_{\text{alg}} (A'/\mathfrak{p}') \subset_{\text{alg}} (A/\mathfrak{p})$$
+    a transcendence basis for $A'/\mathfrak{p}'$ will be a basis for $A/\mathfrak{p}$! hence 
+    $$\operatorname{tr.deg.} (A'/\mathfrak{p}') = \operatorname{tr.deg.} A/\mathfrak{p}$$
+    By incomparability, $\mathfrak{p}' \ne 0$ so $\exists f(\beta_1, \cdots, \beta_r) \in \mathfrak{p}'$ and then 
+    $\overline{\beta_1}, \cdots, \overline{\beta_r} \in A'/\mathfrak{p}'$ generate $A'/\mathfrak{p}'$ algebraically but they are algebraically 
+    dependent since 
+    $$f(\overline{\beta}_1, \cdots, \overline{\beta}_r) = 0$$
+    Therefore some proper subset of $\overline{\beta_1}, \cdots, \overline{\beta_r}$ is a transcendence basis of $A'/\mathfrak{p}'$ over $k$ so 
+    $$\operatorname{tr.deg.} A'/\mathfrak{p}' \le r-1$$
+    as claimed.  
+\end{proof}
+
+Now let's use this to prove the theorem 
+\begin{proof}
+    Let $A = k[\alpha_1, \cdots, \alpha_n]$ is a domain; we want to show that 
+    $$\dim A = \operatorname{tr.deg.}_k (A)$$
+
+    Let $r = \operatorname{tr.deg.}_k A$; we know that $A \supset A' = k[\beta_1, \cdots, \beta_r]$ some Noether normalization
+    with $\dim A = \dim A' \ge r$ (uses going up theorem). Conversely, let us consider a chain of prime ideals in $A$
+    $$A \supset \mathfrak{p}_0 \supsetneq \mathfrak{p}_1 \supsetneq \cdots \supsetneq \mathfrak{p}_{s-1} \supsetneq A/\mathfrak{p}_0$$
+    with $s$ the length of the chain; we show that $s \le r$. By the proposition we have 
+    $$\operatorname{tr.deg} A > \operatorname{tr.deg} (A/\mathfrak{p}_{s-1}) > \operatorname{tr.deg} (A/\mathfrak{p}_{s-2}) > \cdots > \operatorname{tr.deg.} 0$$
+    we go down $s$ steps, losing at least one degree each time; at the end we get $r-s \ge 0 \implies r \ge s$. 
+\end{proof}
+
+We still need to tackle the theory of transcendence bases; 
+\begin{lemma}
+    Say $k \subset L$ fields and $\delta_1, \cdots, \delta_n \in L$ are algebraically dependent; then $\exists r \ge 1$ s.t. 
+    $\delta_r$ is algebraic over $k(\delta_1, \cdots, \delta{r-1})$. 
+
+    Moreover if the $\delta$'s generate $L$, then $\set{\delta_1, \cdots, \delta_{r-1}}$ still generate $L$.
+\end{lemma}
+
+\begin{proof}
+    Find the first $r$ for which $\delta_1, \cdots, \delta_r$ are alg. dependent. so $\delta_1, \cdots, \delta_{r-1}$ are alg. independent. 
+
+    Therefore $\exists f(y_1, \cdots, y_r) \ne 0$ with 
+    $$f(\delta_1, \cdots, \delta_r) = 0$$
+    but 
+    $$f = g_N(y_1, \cdots, y_r) y_r^N + \cdots + g_1 (y_1, \cdots, y_r) + g_0 (y_1, \cdots, y_{r-1})$$
+    But note that 
+    $$g_N(\delta_1, \cdots, \delta_{r-1}) \ne 0$$
+    so evaluating at $\delta_i$'s we get that $\delta_r$ is the root of a polynomial in $k(\delta_1, \cdots, \delta_{r-1}) [x]$ 
+    as in the first claim. 
+
+    We get $k \subset k(\delta_1, \cdots, \delta_{n-1}) \subseteq_{alg} k(\delta_1, \cdots, \delta_n) \subseteq L$; hence 
+    $\delta_1, \cdots, \delta_{n-1}$ algebraically generate $L$.  
 \end{proof}
 
 \end{document}
