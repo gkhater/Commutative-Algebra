@@ -4275,4 +4275,98 @@ ALso note that $\pi^n u = \pi^m v$, then $n = m$.
     Nte that $\exists \pi$ s.t. 
     $$v(\pi) = 1$$
 \end{remark}
+
+\begin{proposition}
+    Let $k$ be any field, equipped from a $v \colon k \to \Z \cup \set{\infty}$, with 
+    $v(0) = \infty$ and $v(\alpha) \in \Z$ for $\alpha \ne 0$ and all the properties above. 
+    If we define 
+    $$A = \set{\alpha \in k \mid v(\alpha) \ge 0}$$
+    then $A$ is a DVR with valuation $v$. 
+\end{proposition}
+
+\begin{proof}
+    $v \colon k^* \to \Z$ is a homomorphism, so $v(1) = 0$ for sure. Similarly, $v(-1) = 0$ hence we have that 
+    $-1, 1 \in A$. But from $v(\alpha \beta)$ and $v(\alpha + \beta)$ we see that $A$ is closed under addition and multiplication, 
+    so $A$ is a subring of $k$. Also note that the units of $A$ are 
+    $$\set{\alpha \in k \mid \alpha, \alpha^{-1} \in A}$$
+    But this means that 
+    $$A^* = \set{\alpha \in k \mid v(\alpha) = 0}$$
+    hence the non units are of the form $\set{\alpha \mid v(\alpha) > 0}$. Notice that $\exists \pi$ s.t. 
+    $v(\pi) = 1$, then $\mathfrak{m} = \pi A$ (the set of all non-units). Now let $\alpha \subseteq A$ be any ideal 
+    of $A$, then the set $\set{v(b) \mid v \in \mathfrak{a}}$, this is a nonempty subset of $\Z_{\ge 0}$, so it contains a minimal element. 
+    So $\exists b_0 \in \mathfrak{a}$ with $v(b_0) = k$ (which is the minimal element). So we claim that $\mathfrak{a} = \angles{b_0}$, 
+    in fact $\mathfrak{a} = \angles{\pi^k}$. Clearly these two generators are associates, so wlog $b_0 = \pi^k$. 
+
+    So we have that $\pi^k \in \mathfrak{a}$, and $v(b) \ge k$, then $v(b\pi^{-k}) \ge 0$ so $b \pi^{-k} \in A$ so $b \in \pi^k A$. 
+    hence we get that $\mathfrak{a} = \angles{\pi^k}$, so $A$ is a PID and we have that it is local. So $A$ is a DVR. 
+\end{proof}
+
+\begin{remark}
+    There are more general valuations of a field possible, $v \colon K \to G$ with $(G, +)$ an ordered abelian group, with the properties of the valuation.
+\end{remark}
+
+\begin{definition}
+    A valuation ring of a field $K$ is a subring with the property that $\forall x \in k$ $x \in A$ or $x^{-1} \in A$.
+\end{definition}
+
+\textbf{Culture.} Valuation rings are integrally closed. And if $A$ (not necc. a valuation) is a subfield of some $k$, then $\overline{A} = \bigcap_{V \supset A} V$ where 
+$V$ is the set of valuation rings that contain $A$.
+
+\begin{theorem}
+    $A$ is a DVR $\iff$ $A$ is a Local Noetherian domain of dimension $1$, integrally closed.
+\end{theorem}
+
+\begin{remark}
+    In the context above since we have a dim $1$, we get that there exists nonzero prime ideals and these are all maximal. Because they are local, 
+    there is only on prime so $\Spec A = \set{0, \mathfrak{m}}$. 
+\end{remark}
+
+\begin{proof}
+    \begin{itemize}
+        \item We know a DVR is a local PID that is not a field. But PID $\implies$ Noetherian domain and not a field $\implies \dim 1$, also we have UFD 
+        so integrally closed (because PID). 
+        
+        Note that we can also see integral closure from the valuation, say $x \in K$ (field of fractions) is integral over $A$ (DVR). 
+        So we have an identity 
+        $$x^n = -a_{n-1} x^{n-1} - \cdots - a_1 x - a_0, \quad a_i \in A$$
+        could we have $v(x) \le 0$? well if so then 
+        $$v(x^n) = nd < 0$$
+        but 
+        $$v(-a_{n-1} x^{n-1} \cdots - a_0) \ge \min_i \left(-a_ix^i\right) \ge id$$ 
+        Which cannot happen with $d < 0$. So $v(s) \ge 0$ and $x \in A$. 
+
+        \item $(A, \mathfrak{m})$ is a local Noetherian domain with $\Spec A = \set{0 , \mathfrak{m}}$ and $A$ is integrally closed. We want to show that $\mathfrak{m}$ is principal. If 
+        $\mathfrak{m} = \angles{\pi}$ and $\pi$ is not nilpotent, by the same idea as above this would show PID. 
+
+        \textbf{Introduce} $\mathfrak{m}^{-1} := \set{x \in K \mid x \mathfrak{m} \subseteq A}$. Observe that $\mathfrak{m}^{-1}$ is an $A$-submodule of 
+        $K$. Moreover for any $y \ne 0 \in \mathfrak{m}$, then $\mathfrak{m}^{-1} \subseteq \set{xy \in A} := y^{-1}A$. So $\mathfrak{m}^{-1}$ is a f.g. submodule 
+        of $k$, because $A$ is Noetherian. $\mathfrak{m} \mathfrak{m}^{-1} \subseteq A$ where 
+        $$\mathfrak{m} \mathfrak{m}^{-1} = \set{\text{finite sums of the form } \sum \alpha_i \beta_i}$$
+        We want to show that $\mathfrak{m} \mathfrak{m}^{-1} = A$.  
+
+        \textbf{Claim 1.} $A \subsetneq \mathfrak{m}^{-1}$. Indeed take any $0 \ne y \in \mathfrak{m}$, then $\mathfrak{m}$ is minimal over $\angles{y}$. 
+        Therefore 
+        $$\Supp (A/ \angles{y}) = \set{\mathfrak{m}} \implies \Ass (A / \angles{y}) = \set{\mathfrak{m}}$$
+        Hence $\exists \overline{x} = x + \angles{y}$ with $\Ann \overline{x} = \mathfrak{m}$. This means that 
+        $$\mathfrak{m} = \set{a \in A \mid ax \in yA} = (yA \colon X)$$
+        In particular, $1 \not\in (yA \colon x)$, so $x \not\in yA$ therefore 
+        $$\alpha := \frac{x}{y} \not\in A$$
+        OTOH if $m \in \mathfrak{m}$, then $xm \in yA$ so $\alpha m \in A$ (for all $m$) Hence 
+        $$x/y \mathfrak{m} \subset A \implies x/y \in \mathfrak{m}^{-1}$$
+        
+        \textbf{Claim 2.} $\mathfrak{m}^{-1} \mathfrak{m} = A$. Indeed, $\mathfrak{m}^{-1} \mathfrak{m}$ is an ideal of $A$. 
+        If the claim doesn't hold then $\mathfrak{m}^{-1} \mathfrak{m} \subseteq m$ i.e. every $\alpha \in \mathfrak{m}^{-1}$ satisfies $\alpha \mathfrak{m} \subseteq \mathfrak{m}$. 
+        But $\mathfrak{m}$ is f.g. and $\mathfrak{m}$ is a faithful $A$-module, so $\alpha$ is integral over $A$. But $A$ is integrally closed so 
+        $\alpha \in A$ contradicting claim $1$. 
+        
+        \textbf{Claim 3.} In any local domain, if $\mathfrak{m}^{-1} \mathfrak{m} = A$, then $\mathfrak{m}$ is principal. Indeed, 
+        there exists a finite expression $x_1y_1 + \cdots + x_r y_r = 1$ with $x_i \in \mathfrak{m}, \ y_i \in \mathfrak{m}^{-1}$ (i.e. $y_i \mathfrak{m} \subseteq A$). 
+        Therefore $y_1 \mathfrak{m} + \cdots + y_r \mathfrak{m} = A$. So at least one of the $\mathfrak{a}_i = A$ (they cannot all be contained in $\mathfrak{m}$). 
+        i.e. wlog $\exists i$ s.t. $x_i y_i = 1$. we claim $\mathfrak{m} = \angles{x_i}$. Indeed, let $m \in \mathfrak{m}$, then $y_i m = a \in A$. 
+        Therefore $x_i y_i m = x_i a = m$, therefore $m \in \angles{z}$.  
+    \end{itemize}
+\end{proof}
+
+
+
 \end{document}
